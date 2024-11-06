@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between p-5">
+    <header className="flex w-full items-center justify-between p-5">
       <div className="flex items-center gap-2.5">
         <Image
           src="/SFC logo.png"
