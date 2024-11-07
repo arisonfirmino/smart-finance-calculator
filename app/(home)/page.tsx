@@ -6,6 +6,7 @@ import TransactionHistory from "@/components/transaction-history";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { notFound, redirect } from "next/navigation";
+import Form from "@/components/form";
 import { db } from "@/app/lib/prisma";
 
 const Home = async () => {
@@ -33,11 +34,28 @@ const Home = async () => {
     return notFound();
   }
 
+  const transactions = [
+    ...user.incomes.map((income) => ({
+      ...income,
+      value: income.value,
+    })),
+    ...user.expenses.map((expense) => ({
+      ...expense,
+      value: expense.value,
+    })),
+  ];
+
+  const sortedTransactions = transactions.sort(
+    (a, b) => b.date.getTime() - a.date.getTime(),
+  );
+
   return (
     <main className="flex min-h-screen w-full flex-col items-center gap-5">
       <Header />
 
-      <div className="w-full max-w-xl space-y-5 px-5 md:px-0">
+      <div className="w-full max-w-xl space-y-5 px-5 pb-5 md:px-0">
+        <Form user={user} />
+
         <Balance user={user} />
 
         <div className="flex gap-5">
@@ -47,7 +65,7 @@ const Home = async () => {
 
         <h3 className="font-semibold uppercase">Histórico de transações</h3>
 
-        <TransactionHistory />
+        <TransactionHistory transactions={sortedTransactions} />
       </div>
     </main>
   );

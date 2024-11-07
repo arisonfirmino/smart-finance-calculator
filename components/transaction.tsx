@@ -1,21 +1,33 @@
 import { Card } from "@/components/ui/card";
-import { TrendingUpIcon } from "lucide-react";
+import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import DeleteTransaction from "@/components/delete-transaction";
+import { TransactionProps } from "@/types";
+import { formatCurrency } from "@/app/helpers/value";
+import { formatDateLong } from "@/app/helpers/formatDate";
 
-const Transaction = () => {
+const Transaction = ({ transaction }: TransactionProps) => {
   return (
     <Card className="relative flex items-end justify-between p-2.5 duration-500 hover:scale-[1.02]">
       <div>
         <div className="flex items-center gap-2.5">
-          <TrendingUpIcon size={14} className="text-green-500" />
-          <h4 className="text-sm capitalize">salário</h4>
+          {transaction.type === "income" ? (
+            <TrendingUpIcon size={14} className="text-green-500" />
+          ) : (
+            <TrendingDownIcon size={14} className="text-red-600" />
+          )}
+
+          <h4 className="text-sm capitalize">{transaction.title}</h4>
         </div>
-        <h2 className="font-medium">R$ 0,00</h2>
+        <h2 className="font-medium">
+          {formatCurrency(Number(transaction.value))}
+        </h2>
       </div>
 
       <DeleteTransaction />
 
-      <small className="text-gray-400">06/11/2024</small>
+      <small className="text-gray-400">
+        {formatDateLong(transaction.date)}
+      </small>
     </Card>
   );
 };

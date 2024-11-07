@@ -8,19 +8,28 @@ import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
 import { formatDateForBalance } from "@/app/helpers/formatDate";
 import { formatCurrency } from "@/app/helpers/value";
 import { BalanceProps } from "@/types";
+import { getGreeting } from "@/app/helpers/greeting";
 
 const Balance = ({ user }: BalanceProps) => {
   const [showTotalBalance, setShowTotalBalance] = useState(true);
 
+  const greeting = getGreeting();
+
   return (
     <Card className="relative space-y-5 p-5">
-      <Avatar>
-        {user.image ? (
-          <AvatarImage src={user.image} />
-        ) : (
-          <LoaderIcon className="animate-spin" />
-        )}
-      </Avatar>
+      <div className="flex items-center gap-2.5">
+        <Avatar>
+          {user.image ? (
+            <AvatarImage src={user.image} />
+          ) : (
+            <LoaderIcon className="animate-spin" />
+          )}
+        </Avatar>
+        <div>
+          <p className="text-sm text-gray-400">{greeting},</p>
+          <h2 className="font-medium">{user.name}</h2>
+        </div>
+      </div>
 
       <Button
         size="icon"
@@ -31,12 +40,12 @@ const Balance = ({ user }: BalanceProps) => {
       </Button>
 
       <div>
-        <h3 className="text-xs font-medium uppercase">Saldo total</h3>
-        <h2 className="text-xl font-bold">
+        <h4 className="text-xs font-medium uppercase">Saldo total</h4>
+        <h3 className="text-xl font-bold">
           {showTotalBalance
             ? `${formatCurrency(Number(user.balance))}`
             : "******"}
-        </h2>
+        </h3>
       </div>
 
       <p className="text-end text-xs text-gray-400">

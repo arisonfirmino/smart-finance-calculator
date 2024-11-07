@@ -11,7 +11,7 @@ const TotalExpenses = ({ user }: TotalExpensesProps) => {
         <h3 className="text-sm uppercase">Despesas</h3>
       </div>
       <h2 className="font-medium">
-        {formatCurrency(Number(user.total_incomes))}
+        {formatCurrency(Number(user.total_expenses))}
       </h2>
     </Card>
   );

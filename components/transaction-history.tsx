@@ -1,13 +1,16 @@
 import Transaction from "@/components/transaction";
+import { TransactionHistoryProps } from "@/types";
 
-const TransactionHistory = () => {
+const TransactionHistory = ({ transactions }: TransactionHistoryProps) => {
   return (
     <>
-      <ul>
-        <li>
-          <Transaction />
-        </li>
-      </ul>
+      {transactions.map((transaction) => (
+        <ul key={transaction.id}>
+          <li>
+            <Transaction transaction={transaction} />
+          </li>
+        </ul>
+      ))}
     </>
   );
 };

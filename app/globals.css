@@ -39,6 +39,16 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  background: #2a465e;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #09111e;
+  border-radius: 5px;
+}
+
 @layer base {
   * {
     @apply border-border;
