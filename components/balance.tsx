@@ -4,15 +4,22 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
+import { formatDateForBalance } from "@/app/helpers/formatDate";
+import { formatCurrency } from "@/app/helpers/value";
+import { BalanceProps } from "@/types";
 
-const Balance = () => {
+const Balance = ({ user }: BalanceProps) => {
   const [showTotalBalance, setShowTotalBalance] = useState(true);
 
   return (
     <Card className="relative space-y-5 p-5">
       <Avatar>
-        <AvatarImage src="/SFC logo.png" />
+        {user.image ? (
+          <AvatarImage src={user.image} />
+        ) : (
+          <LoaderIcon className="animate-spin" />
+        )}
       </Avatar>
 
       <Button
@@ -26,11 +33,15 @@ const Balance = () => {
       <div>
         <h3 className="text-xs font-medium uppercase">Saldo total</h3>
         <h2 className="text-xl font-bold">
-          {showTotalBalance ? "R$ 0,00" : "******"}
+          {showTotalBalance
+            ? `${formatCurrency(Number(user.balance))}`
+            : "******"}
         </h2>
       </div>
 
-      <p className="text-end text-xs text-gray-400">atualizado em 06 de nov</p>
+      <p className="text-end text-xs text-gray-400">
+        atualizado em {formatDateForBalance(user.update_at)}
+      </p>
     </Card>
   );
 };
