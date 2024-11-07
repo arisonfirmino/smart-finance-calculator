@@ -29,6 +29,7 @@ export interface FormProps {
 
 export interface TransactionFormProps {
   userId: string;
+  setTransactionType: () => void;
   handleSubmitForm: (data: {
     userId: string;
     title: string;
@@ -43,9 +44,16 @@ export interface FormData {
 }
 
 export interface TransactionProps {
+  userId: string;
   transaction: Income | Expense;
 }
 
 export interface TransactionHistoryProps {
+  userId: string;
   transactions: (Income | Expense)[];
+}
+
+export interface DeleteTransactionProps {
+  userId: string;
+  transaction: Pick<Income | Expense, "id" | "type">;
 }

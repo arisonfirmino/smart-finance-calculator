@@ -17,6 +17,7 @@ const schema = yup.object({
 
 const TransactionForm = ({
   userId,
+  setTransactionType,
   handleSubmitForm,
 }: TransactionFormProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -52,6 +53,7 @@ const TransactionForm = ({
 
     reset();
     setFormattedValue("0,00");
+    setTransactionType();
   };
 
   const formatToCurrency = (value: string) => {

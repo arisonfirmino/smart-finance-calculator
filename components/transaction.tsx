@@ -5,7 +5,7 @@ import { TransactionProps } from "@/types";
 import { formatCurrency } from "@/app/helpers/value";
 import { formatDateLong } from "@/app/helpers/formatDate";
 
-const Transaction = ({ transaction }: TransactionProps) => {
+const Transaction = ({ userId, transaction }: TransactionProps) => {
   return (
     <Card className="relative flex items-end justify-between p-2.5 duration-500 hover:scale-[1.02]">
       <div>
@@ -23,7 +23,7 @@ const Transaction = ({ transaction }: TransactionProps) => {
         </h2>
       </div>
 
-      <DeleteTransaction />
+      <DeleteTransaction userId={userId} transaction={transaction} />
 
       <small className="text-gray-400">
         {formatDateLong(transaction.date)}

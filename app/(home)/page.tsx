@@ -65,7 +65,10 @@ const Home = async () => {
 
         <h3 className="font-semibold uppercase">Histórico de transações</h3>
 
-        <TransactionHistory transactions={sortedTransactions} />
+        <TransactionHistory
+          userId={user.id}
+          transactions={sortedTransactions}
+        />
       </div>
     </main>
   );

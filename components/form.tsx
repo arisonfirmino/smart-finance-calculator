@@ -33,6 +33,7 @@ const Form = ({ user }: FormProps) => {
       {transactionType && (
         <TransactionForm
           userId={user.id}
+          setTransactionType={() => setTransactionType("")}
           handleSubmitForm={
             transactionType === "income" ? createNewIncome : createNewExpense
           }
