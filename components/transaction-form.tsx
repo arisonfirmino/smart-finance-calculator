@@ -24,6 +24,8 @@ const TransactionForm = ({
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [formattedValue, setFormattedValue] = useState("0,00");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -35,7 +37,10 @@ const TransactionForm = ({
   });
 
   const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+
     if (!date) {
+      setIsLoading(false);
       return;
     }
 
@@ -54,6 +59,7 @@ const TransactionForm = ({
     reset();
     setFormattedValue("0,00");
     setTransactionType();
+    setIsLoading(false);
   };
 
   const formatToCurrency = (value: string) => {
@@ -105,7 +111,12 @@ const TransactionForm = ({
       </div>
 
       <div className="relative flex justify-between">
-        <Button className="uppercase">Adicionar</Button>
+        <Button
+          disabled={isLoading}
+          className={`uppercase ${isLoading ? "cursor-not-allowed" : ""}`}
+        >
+          {isLoading ? "Carregando" : "Adicionar"}
+        </Button>
         {showCalendar ? (
           <Calendar
             mode="single"
