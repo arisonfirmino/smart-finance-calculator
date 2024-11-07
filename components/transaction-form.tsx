@@ -45,7 +45,7 @@ const TransactionForm = ({
     const formData = {
       userId: userId,
       title: data.title,
-      value: numericValue.toFixed(2),
+      value: numericValue,
       date: date,
     };
 

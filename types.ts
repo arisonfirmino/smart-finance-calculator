@@ -33,7 +33,7 @@ export interface TransactionFormProps {
   handleSubmitForm: (data: {
     userId: string;
     title: string;
-    value: string;
+    value: number;
     date: Date;
   }) => void;
 }
