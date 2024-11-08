@@ -1,4 +1,4 @@
-![Preview](https://utfs.io/f/FJxfrM1suimWCdhZ5mJj1l5D7I69VToUwb4AfyvaNZBzkiJQ)
+![Preview](https://utfs.io/f/FJxfrM1suimWEzujDbV36rCbe0o2fzP4RF5vVd8sKO7aZqHt)
 
 ## SOBRE O PROJETO
 
