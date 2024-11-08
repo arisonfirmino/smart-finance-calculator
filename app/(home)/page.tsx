@@ -54,20 +54,20 @@ const Home = async () => {
       <Header />
 
       <div className="w-full max-w-xl space-y-5 px-5 pb-5 md:px-0">
-        <Form user={user} />
+        <Form user={JSON.parse(JSON.stringify(user))} />
 
-        <Balance user={user} />
+        <Balance user={JSON.parse(JSON.stringify(user))} />
 
         <div className="flex gap-5">
-          <TotalIncomes user={user} />
-          <TotalExpenses user={user} />
+          <TotalIncomes user={JSON.parse(JSON.stringify(user))} />
+          <TotalExpenses user={JSON.parse(JSON.stringify(user))} />
         </div>
 
         <h3 className="font-semibold uppercase">Histórico de transações</h3>
 
         <TransactionHistory
           userId={user.id}
-          transactions={sortedTransactions}
+          transactions={JSON.parse(JSON.stringify(sortedTransactions))}
         />
       </div>
     </main>
