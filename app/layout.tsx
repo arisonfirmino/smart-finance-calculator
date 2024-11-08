@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-custom-gradient text-white antialiased`}
       >
         <AuthProvider>{children}</AuthProvider>
       </body>

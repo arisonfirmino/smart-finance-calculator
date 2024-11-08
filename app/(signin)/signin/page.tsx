@@ -4,7 +4,7 @@ import SignInGoogle from "@/app/(signin)/components/signin-google";
 
 const SignIn = () => {
   return (
-    <main className="flex min-h-screen w-full items-center justify-center">
+    <main className="flex min-h-screen w-full items-center justify-center px-5 md:px-0">
       <Card className="w-full max-w-lg space-y-5 p-5">
         <div className="w-full">
           <h2 className="text-xl font-bold">Faça login</h2>

@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background: radial-gradient(circle, #09111e 0%, #2a465e 100%);
-  color: #ffffff;
-  width: 100%;
-  min-height: 100vh;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
