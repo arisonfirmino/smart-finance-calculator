@@ -2,12 +2,12 @@ import Header from "@/components/header";
 import Balance from "@/components/balance";
 import TotalIncomes from "@/components/total-incomes";
 import TotalExpenses from "@/components/total-expenses";
-import TransactionHistory from "@/components/transaction-history";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import Form from "@/components/form";
 import { db } from "@/app/lib/prisma";
+import TransactionViewer from "@/components/transaction-viewer";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -63,9 +63,7 @@ const Home = async () => {
           <TotalExpenses user={JSON.parse(JSON.stringify(user))} />
         </div>
 
-        <h3 className="font-semibold uppercase">Histórico de transações</h3>
-
-        <TransactionHistory
+        <TransactionViewer
           userId={user.id}
           transactions={JSON.parse(JSON.stringify(sortedTransactions))}
         />

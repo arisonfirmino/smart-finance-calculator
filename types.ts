@@ -48,7 +48,7 @@ export interface TransactionProps {
   transaction: Income | Expense;
 }
 
-export interface TransactionHistoryProps {
+export interface TransactionViewerProps {
   userId: string;
   transactions: (Income | Expense)[];
 }

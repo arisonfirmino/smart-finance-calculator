@@ -1,10 +1,10 @@
 import Transaction from "@/components/transaction";
-import { TransactionHistoryProps } from "@/types";
+import { TransactionViewerProps } from "@/types";
 
 const TransactionHistory = ({
   userId,
   transactions,
-}: TransactionHistoryProps) => {
+}: TransactionViewerProps) => {
   return (
     <>
       {transactions.map((transaction) => (
