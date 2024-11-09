@@ -10,6 +10,11 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import {
+  ArrowUpDownIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
+} from "lucide-react";
 
 const TransactionViewer = ({
   userId,
@@ -26,17 +31,25 @@ const TransactionViewer = ({
 
   return (
     <>
-      <Select defaultValue="all" onValueChange={setFilter}>
-        <SelectTrigger>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className="bg-card text-white">
-          <SelectItem value="all">Histórico de transações</SelectItem>
-          <SelectItem value="incomes">Histórico de receitas</SelectItem>
-          <SelectItem value="expenses">Histórico de despesas</SelectItem>
-        </SelectContent>
-      </Select>
-
+      <div className="flex items-center justify-between">
+        <h3 className="font-medium uppercase">Histórico de transações</h3>
+        <Select defaultValue="all" onValueChange={setFilter}>
+          <SelectTrigger showIcon={false} className="w-fit">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-card text-white">
+            <SelectItem value="all" showCheckIcon={false}>
+              <ArrowUpDownIcon size={16} />
+            </SelectItem>
+            <SelectItem value="incomes" showCheckIcon={false}>
+              <TrendingUpIcon size={16} className="text-green-500" />
+            </SelectItem>
+            <SelectItem value="expenses" showCheckIcon={false}>
+              <TrendingDownIcon size={16} className="text-red-600" />
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <TransactionHistory userId={userId} transactions={filteredTransactions} />
     </>
   );
