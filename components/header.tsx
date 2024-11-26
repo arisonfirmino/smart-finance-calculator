@@ -1,15 +1,8 @@
-"use client";
-
-import { LogOutIcon } from "lucide-react";
-import { Button } from "./ui/button";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
 
 const Header = () => {
-  const handleSignOutClick = () => signOut();
-
   return (
-    <header className="flex w-full items-center justify-between p-5">
+    <header className="flex w-full flex-col items-center justify-center">
       <div className="flex items-center gap-2.5">
         <Image
           src="/SFC logo.png"
@@ -22,13 +15,6 @@ const Header = () => {
           Smart Finance Calculator
         </h1>
       </div>
-      <Button
-        size="icon"
-        onClick={handleSignOutClick}
-        className="rounded-xl hover:bg-red-600"
-      >
-        <LogOutIcon />
-      </Button>
     </header>
   );
 };

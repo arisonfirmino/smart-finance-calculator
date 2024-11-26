@@ -8,6 +8,7 @@ import { notFound, redirect } from "next/navigation";
 import Form from "@/components/form";
 import { db } from "@/app/lib/prisma";
 import TransactionViewer from "@/components/transaction-viewer";
+import SignOutButton from "@/components/signout-button";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -51,12 +52,14 @@ const Home = async () => {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center gap-5">
-      <Header />
+      <div className="w-full max-w-xl space-y-5 px-5 py-5 md:px-0">
+        <Header />
 
-      <div className="w-full max-w-xl space-y-5 px-5 pb-5 md:px-0">
         <Form user={JSON.parse(JSON.stringify(user))} />
 
         <Balance user={JSON.parse(JSON.stringify(user))} />
+
+        <SignOutButton />
 
         <div className="flex gap-5">
           <TotalIncomes user={JSON.parse(JSON.stringify(user))} />
