@@ -26,8 +26,12 @@ const Home = async () => {
       email: session.user.email,
     },
     include: {
-      incomes: true,
-      expenses: true,
+      incomes: {
+        orderBy: [{ date: "desc" }, { created_at: "desc" }],
+      },
+      expenses: {
+        orderBy: [{ date: "desc" }, { created_at: "desc" }],
+      },
     },
   });
 

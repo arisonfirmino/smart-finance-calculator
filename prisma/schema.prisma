@@ -57,25 +57,27 @@ model User {
 }
 
 model Income {
-  id     String   @id @default(uuid())
-  user   User     @relation(fields: [userId], references: [id])
-  userId String
-  title  String
-  value  Decimal  @db.Decimal(10, 2)
-  type   String
-  date   DateTime
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  title      String
+  value      Decimal  @db.Decimal(10, 2)
+  type       String
+  date       DateTime
+  created_at DateTime @default(now())
 
   @@map("incomes")
 }
 
 model Expense {
-  id     String   @id @default(uuid())
-  user   User     @relation(fields: [userId], references: [id])
-  userId String
-  title  String
-  value  Decimal  @db.Decimal(10, 2)
-  type   String
-  date   DateTime
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  title      String
+  value      Decimal  @db.Decimal(10, 2)
+  type       String
+  date       DateTime
+  created_at DateTime @default(now())
 
   @@map("expenses")
 }
