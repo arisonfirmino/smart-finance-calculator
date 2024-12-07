@@ -187,3 +187,45 @@ export const deleteTransaction = async ({
 
   revalidatePath("/");
 };
+
+export const deleteAllTransactions = async ({ userId }: { userId: string }) => {
+  if (!userId) {
+    throw new Error("Usuário não encontrado.");
+  }
+
+  const user = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throw new Error("Usuário não encontrado.");
+  }
+
+  await db.income.deleteMany({
+    where: {
+      userId,
+    },
+  });
+
+  await db.expense.deleteMany({
+    where: {
+      userId,
+    },
+  });
+
+  await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      balance: 0.0,
+      total_incomes: 0.0,
+      total_expenses: 0.0,
+      update_at: new Date(),
+    },
+  });
+
+  revalidatePath("/");
+};

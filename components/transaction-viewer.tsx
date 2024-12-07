@@ -15,6 +15,7 @@ import {
   TrendingDownIcon,
   TrendingUpIcon,
 } from "lucide-react";
+import DeleteAllTransactionsButton from "./delete-all-transactions-button";
 
 const TransactionViewer = ({
   userId,
@@ -33,22 +34,25 @@ const TransactionViewer = ({
     <>
       <div className="flex items-center justify-between">
         <h3 className="font-medium uppercase">Histórico de transações</h3>
-        <Select defaultValue="all" onValueChange={setFilter}>
-          <SelectTrigger showIcon={false} className="w-fit">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-card text-white">
-            <SelectItem value="all" showCheckIcon={false}>
-              <ArrowUpDownIcon size={16} />
-            </SelectItem>
-            <SelectItem value="incomes" showCheckIcon={false}>
-              <TrendingUpIcon size={16} className="text-green-500" />
-            </SelectItem>
-            <SelectItem value="expenses" showCheckIcon={false}>
-              <TrendingDownIcon size={16} className="text-red-600" />
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2.5">
+          {transactions.length > 0 && <DeleteAllTransactionsButton />}
+          <Select defaultValue="all" onValueChange={setFilter}>
+            <SelectTrigger showIcon={false} className="w-9 justify-center p-0">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-card text-white">
+              <SelectItem value="all" showCheckIcon={false}>
+                <ArrowUpDownIcon size={16} />
+              </SelectItem>
+              <SelectItem value="incomes" showCheckIcon={false}>
+                <TrendingUpIcon size={16} className="text-green-500" />
+              </SelectItem>
+              <SelectItem value="expenses" showCheckIcon={false}>
+                <TrendingDownIcon size={16} className="text-red-600" />
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <TransactionHistory userId={userId} transactions={filteredTransactions} />
     </>
