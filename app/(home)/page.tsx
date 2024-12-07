@@ -50,9 +50,13 @@ const Home = async () => {
     })),
   ];
 
-  const sortedTransactions = transactions.sort(
-    (a, b) => b.date.getTime() - a.date.getTime(),
-  );
+  const sortedTransactions = transactions.sort((a, b) => {
+    if (a.date.getTime() !== b.date.getTime()) {
+      return b.date.getTime() - a.date.getTime();
+    }
+
+    return b.created_at.getTime() - a.created_at.getTime();
+  });
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center gap-5">
