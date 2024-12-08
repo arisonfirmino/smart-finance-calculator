@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
-import TransactionForm from "./transaction-form";
+} from "@/app/components/ui/select";
+import TransactionForm from "@/app/components/transaction-form";
+
 import { createNewExpense, createNewIncome } from "@/app/actions/transaction";
-import { FormProps } from "@/types";
+
+import { FormProps } from "@/app/types";
 
 const Form = ({ user }: FormProps) => {
   const [transactionType, setTransactionType] = useState("");

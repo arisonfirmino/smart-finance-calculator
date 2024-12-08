@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "./ui/button";
+
+import { Card } from "@/app/components/ui/card";
+import { Avatar, AvatarImage } from "@/app/components/ui/avatar";
+import { Button } from "@/app/components/ui/button";
+
 import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
-import { formatDateForBalance } from "@/app/helpers/formatDate";
-import { formatCurrency } from "@/app/helpers/value";
-import { BalanceProps } from "@/types";
+
 import { getGreeting } from "@/app/helpers/greeting";
+import { formatCurrency } from "@/app/helpers/value";
+import { formatDateForBalance } from "@/app/helpers/formatDate";
+
+import { BalanceProps } from "@/app/types";
 
 const Balance = ({ user }: BalanceProps) => {
   const [showTotalBalance, setShowTotalBalance] = useState(true);

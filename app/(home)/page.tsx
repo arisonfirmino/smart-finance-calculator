@@ -1,14 +1,15 @@
-import Header from "@/components/header";
-import Balance from "@/components/balance";
-import TotalIncomes from "@/components/total-incomes";
-import TotalExpenses from "@/components/total-expenses";
+import { db } from "@/app/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import Form from "@/components/form";
-import { db } from "@/app/lib/prisma";
-import TransactionViewer from "@/components/transaction-viewer";
-import SignOutButton from "@/components/signout-button";
+
+import Header from "@/app/components/header";
+import Form from "@/app/components/form";
+import Balance from "@/app/components/balance";
+import SignOutButton from "@/app/components/signout-button";
+import TotalIncomes from "@/app/components/total-incomes";
+import TotalExpenses from "@/app/components/total-expenses";
+import TransactionViewer from "@/app/components/transaction-viewer";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);

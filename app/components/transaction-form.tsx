@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+
+import { Input } from "@/app/components/ui/input";
+import { Button } from "@/app/components/ui/button";
+import { Calendar } from "@/app/components/ui/calendar";
+
 import { formatDateLong } from "@/app/helpers/formatDate";
-import { TransactionFormProps, FormData } from "@/types";
+
+import { TransactionFormProps, FormData } from "@/app/types";
 
 const schema = yup.object({
   title: yup.string().required("Este campo é obrigatório."),

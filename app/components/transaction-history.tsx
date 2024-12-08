@@ -1,5 +1,6 @@
-import Transaction from "@/components/transaction";
-import { TransactionViewerProps } from "@/types";
+import Transaction from "@/app/components/transaction";
+
+import { TransactionViewerProps } from "@/app/types";
 
 const TransactionHistory = ({
   userId,

@@ -1,21 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import TransactionHistory from "@/components/transaction-history";
-import { TransactionViewerProps } from "@/types";
+
+import TransactionHistory from "@/app/components/transaction-history";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
+} from "@/app/components/ui/select";
+import DeleteAllTransactionsButton from "@/app/components/delete-all-transactions-button";
+
 import {
   ArrowUpDownIcon,
   TrendingDownIcon,
   TrendingUpIcon,
 } from "lucide-react";
-import DeleteAllTransactionsButton from "./delete-all-transactions-button";
+
+import { TransactionViewerProps } from "@/app/types";
 
 const TransactionViewer = ({
   userId,

@@ -1,7 +1,10 @@
-import { formatCurrency } from "@/app/helpers/value";
-import { Card } from "@/components/ui/card";
-import { TotalIncomesProps } from "@/types";
+import { Card } from "@/app/components/ui/card";
+
 import { TrendingUpIcon } from "lucide-react";
+
+import { formatCurrency } from "@/app/helpers/value";
+
+import { TotalIncomesProps } from "@/app/types";
 
 const TotalIncomes = ({ user }: TotalIncomesProps) => {
   return (

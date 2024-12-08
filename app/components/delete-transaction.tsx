@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+
 import { LoaderIcon, Trash2Icon } from "lucide-react";
-import { DeleteTransactionProps } from "@/types";
+
 import { deleteTransaction } from "@/app/actions/transaction";
+
+import { DeleteTransactionProps } from "@/app/types";
 
 const DeleteTransaction = ({ userId, transaction }: DeleteTransactionProps) => {
   const [isLoading, setIsLoading] = useState(false);

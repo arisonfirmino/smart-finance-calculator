@@ -1,9 +1,12 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "@/app/components/ui/card";
+import DeleteTransaction from "@/app/components/delete-transaction";
+
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
-import DeleteTransaction from "@/components/delete-transaction";
-import { TransactionProps } from "@/types";
+
 import { formatCurrency } from "@/app/helpers/value";
 import { formatDateLong } from "@/app/helpers/formatDate";
+
+import { TransactionProps } from "@/app/types";
 
 const Transaction = ({ userId, transaction }: TransactionProps) => {
   return (

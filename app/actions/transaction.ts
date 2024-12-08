@@ -2,7 +2,7 @@
 
 import { db } from "@/app/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { CreateNewTransaction } from "@/types";
+import { CreateNewTransaction } from "@/app/types";
 import {
   calculateBalance,
   calculateTotalIncomes,

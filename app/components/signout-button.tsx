@@ -1,8 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { LogOutIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
+
+import { Button } from "@/app/components/ui/button";
+
+import { LogOutIcon } from "lucide-react";
 
 const SignOutButton = () => {
   const handleSignOutClick = () => signOut();
