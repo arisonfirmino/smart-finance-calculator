@@ -52,7 +52,7 @@ const config: Config = {
         },
       },
       backgroundImage: {
-        "custom-gradient": "radial-gradient(circle, #09111e 0%, #2a465e 100%)",
+        "custom-gradient": "radial-gradient(circle, #0B1224 0%, #2A465E 100%)",
       },
       borderRadius: {
         lg: "var(--radius)",

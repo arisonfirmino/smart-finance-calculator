@@ -12,7 +12,7 @@ const SignOutButton = () => {
   return (
     <Button
       onClick={handleSignOutClick}
-      className="w-full justify-between rounded-xl uppercase hover:bg-red-600"
+      className="w-full justify-between border-none uppercase hover:bg-red-600"
     >
       Sair
       <LogOutIcon />

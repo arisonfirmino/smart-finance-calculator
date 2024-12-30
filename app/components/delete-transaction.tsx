@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { toast } from "sonner";
+
 import { LoaderIcon, Trash2Icon } from "lucide-react";
 
 import { deleteTransaction } from "@/app/actions/transaction";
@@ -18,16 +20,17 @@ const DeleteTransaction = ({ userId, transaction }: DeleteTransactionProps) => {
       userId,
       transactionId: transaction.id,
       type: transaction.type,
-    }).then(() => {
-      setIsLoading(false);
     });
+
+    setIsLoading(false);
+    toast(`${transaction.type === "income" ? "receita" : "despesa"} deletada.`);
   };
 
   return (
     <button
       onClick={handleDeleteClick}
       disabled={isLoading}
-      className={`absolute right-2.5 top-2.5 text-red-600 ${isLoading ? "cursor-not-allowed" : ""}`}
+      className={`text-red-600 ${isLoading ? "cursor-not-allowed" : ""}`}
     >
       {isLoading ? (
         <LoaderIcon size={12} className="animate-spin" />

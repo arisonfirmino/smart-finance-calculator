@@ -1,6 +1,6 @@
 import { Card } from "@/app/components/ui/card";
-import SignInGitHub from "@/app/(signin)/components/signin-github";
-import SignInGoogle from "@/app/(signin)/components/signin-google";
+import SignInGitHub from "@/app/signin/components/signin-github";
+import SignInGoogle from "@/app/signin/components/signin-google";
 
 const SignIn = () => {
   return (
