@@ -6,14 +6,26 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
-      className={cn("bg-card text-card-foreground shadow-sm", className)}
+      className={cn(
+        "bg-card text-card-foreground overflow-hidden shadow-sm",
+        className,
+      )}
       {...props}
     />
   );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="card-header" className={cn(className)} {...props} />;
+  return (
+    <div
+      data-slot="card-header"
+      className={cn(
+        "bg-primary text-primary-foreground flex items-center justify-between p-1.5",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {

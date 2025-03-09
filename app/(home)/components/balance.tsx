@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 
-import Image from "next/image";
-
 import { Badge } from "@/app/components/ui/badge";
 
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 import { formatCurrency } from "@/app/helpers/formatCurrency";
+import BankItem from "@/app/components/bank-item";
 
 const Balance = () => {
   const [hideBalance, setHideBalance] = useState(false);
@@ -48,13 +47,7 @@ const Balance = () => {
         {banks.map((bank) => (
           <li key={bank.icon}>
             <Badge variant="outline">
-              <Image
-                src={bank.icon}
-                alt={bank.icon}
-                height={500}
-                width={500}
-                className="max-w-3.5 min-w-3.5 rounded"
-              />
+              <BankItem icon={bank.icon} />
               {hideBalance ? "******" : formatCurrency(bank.value)}
             </Badge>
           </li>
