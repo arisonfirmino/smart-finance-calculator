@@ -8,6 +8,7 @@ import UserAvatar from "@/app/components/user-avatar";
 import Greeting from "@/app/(home)/components/greeting";
 import LogOutButton from "@/app/(home)/components/logout-button";
 import Balance from "@/app/(home)/components/balance";
+import BanksSheet from "@/app/(home)/components/banks/banks-sheet";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -20,20 +21,24 @@ const Home = async () => {
 
   return (
     <section className="flex flex-col gap-5 md:flex-row">
-      <Card className="w-full overflow-hidden rounded-2xl">
-        <CardHeader className="bg-primary flex items-center justify-between p-1.5 pr-3">
-          <div className="flex items-center gap-2">
-            <UserAvatar user={user} />
-            <Greeting name={user.name} />
-          </div>
+      <div className="w-full space-y-5">
+        <Card className="overflow-hidden rounded-2xl">
+          <CardHeader className="bg-primary flex items-center justify-between p-1.5 pr-3">
+            <div className="flex items-center gap-2">
+              <UserAvatar user={user} />
+              <Greeting name={user.name} />
+            </div>
 
-          <LogOutButton />
-        </CardHeader>
+            <LogOutButton />
+          </CardHeader>
 
-        <CardContent className="p-2">
-          <Balance />
-        </CardContent>
-      </Card>
+          <CardContent className="p-2">
+            <Balance />
+          </CardContent>
+        </Card>
+
+        <BanksSheet />
+      </div>
 
       <div className="w-full">Histórico</div>
     </section>
