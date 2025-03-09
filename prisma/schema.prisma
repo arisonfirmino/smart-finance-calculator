@@ -46,5 +46,21 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  banks Bank[]
+
   @@map("users")
+}
+
+model Bank {
+  id              String   @id @default(uuid())
+  name            String
+  icon            String
+  initial_balance Decimal  @default(0.00)
+  current_balance Decimal  @default(0.00)
+  created_at      DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@map("banks")
 }
