@@ -10,6 +10,7 @@ import LogOutButton from "@/app/(home)/components/logout-button";
 import Balance from "@/app/(home)/components/balance";
 import BanksSheet from "@/app/(home)/components/banks/banks-sheet";
 import TransactionHistory from "@/app/(home)/components/history/transaction-history";
+import TotalAmount from "./components/total-amount";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -39,6 +40,11 @@ const Home = async () => {
         </Card>
 
         <BanksSheet />
+
+        <div className="flex gap-5">
+          <TotalAmount type="income" total={500} />
+          <TotalAmount type="expense" total={500} />
+        </div>
       </div>
 
       <TransactionHistory />
