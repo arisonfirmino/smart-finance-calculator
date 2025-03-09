@@ -46,7 +46,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  banks Bank[]
+  balance Decimal @default(0.00)
+  banks   Bank[]
 
   @@map("users")
 }
