@@ -1,3 +1,7 @@
+"use client";
+
+import { signIn } from "next-auth/react";
+
 import { Button } from "@/app/components/ui/button";
 
 import GoogleIcon from "@/app/constants/google-icon";
@@ -15,7 +19,11 @@ const SignInPage = () => {
             SFC: Smart Finance Calculator
           </h1>
 
-          <Button variant="outline" className="w-full">
+          <Button
+            onClick={async () => await signIn("google")}
+            variant="outline"
+            className="w-full"
+          >
             <GoogleIcon />
             Continuar com Google
           </Button>
