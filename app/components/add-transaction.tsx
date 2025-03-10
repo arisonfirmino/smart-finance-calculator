@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import {
   Dialog,
@@ -13,12 +17,15 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/components/ui/tabs";
+import BankForm from "@/app/components/bank-form";
 
 import { PlusIcon } from "lucide-react";
 
 const AddTransaction = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button size="icon">
           <PlusIcon />
@@ -38,7 +45,9 @@ const AddTransaction = () => {
           <TabsContent value="transaction">
             Adicionar nova transação
           </TabsContent>
-          <TabsContent value="bank">Adicionar novo banco</TabsContent>
+          <TabsContent value="bank">
+            <BankForm onClose={() => setIsDialogOpen(false)} />
+          </TabsContent>
         </Tabs>
       </DialogContent>
     </Dialog>
