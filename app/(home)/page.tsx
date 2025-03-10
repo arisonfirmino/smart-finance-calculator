@@ -39,7 +39,7 @@ const Home = async () => {
           </CardContent>
         </Card>
 
-        <BanksSheet />
+        <BanksSheet banks={JSON.parse(JSON.stringify(user.banks))} />
 
         <div className="flex gap-5">
           <TotalAmount type="income" total={500} />

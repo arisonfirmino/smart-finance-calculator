@@ -1,4 +1,4 @@
-import BankItem from "@/app/components/bank-item";
+import BankItem from "@/app/components/bank-badge";
 import {
   Accordion,
   AccordionItem,

@@ -8,10 +8,17 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/app/components/ui/sheet";
+import BanksList from "@/app/(home)/components/banks/banks-list";
 
 import { ChevronRightIcon, LandmarkIcon } from "lucide-react";
 
-const BanksSheet = () => {
+import { Bank } from "@prisma/client";
+
+interface BanksSheetProps {
+  banks: Bank[];
+}
+
+const BanksSheet = ({ banks }: BanksSheetProps) => {
   return (
     <Sheet>
       <SheetTrigger
@@ -34,6 +41,14 @@ const BanksSheet = () => {
             Veja os detalhes das suas contas bancárias registradas.
           </SheetDescription>
         </SheetHeader>
+
+        {banks.length > 0 ? (
+          <BanksList banks={banks} />
+        ) : (
+          <p className="text-muted-foreground text-center text-sm">
+            Você ainda não registrou nenhuma conta.
+          </p>
+        )}
       </SheetContent>
     </Sheet>
   );

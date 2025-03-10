@@ -7,12 +7,12 @@ import {
   SelectContent,
   SelectItem,
 } from "@/app/components/ui/select";
-import BankItem from "@/app/components/bank-item";
+import BankBadge from "@/app/components/bank-badge";
 
-import { BankType } from "@/app/components/bank-form";
+import { Bank } from "@/app/components/bank-form";
 
 interface SelectBankProps {
-  setSelectedBank: (value: BankType | null) => void;
+  setSelectedBank: (value: Bank | null) => void;
 }
 
 const SelectBank = ({ setSelectedBank }: SelectBankProps) => {
@@ -28,7 +28,7 @@ const SelectBank = ({ setSelectedBank }: SelectBankProps) => {
       <SelectContent>
         {banks.map((bank) => (
           <SelectItem key={bank.name} value={bank.name}>
-            <BankItem icon={bank.icon} name={bank.name} />
+            <BankBadge icon={bank.icon} name={bank.name} />
           </SelectItem>
         ))}
       </SelectContent>

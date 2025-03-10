@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Badge } from "@/app/components/ui/badge";
-import BankItem from "@/app/components/bank-item";
+import BankBadge from "@/app/components/bank-badge";
 
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
@@ -41,7 +41,7 @@ const Balance = ({ user }: BalanceProps) => {
           {user.banks.map((bank) => (
             <li key={bank.icon}>
               <Badge variant="outline">
-                <BankItem icon={bank.icon} />
+                <BankBadge icon={bank.icon} />
                 {hideBalance
                   ? "******"
                   : formatCurrency(Number(bank.current_balance))}

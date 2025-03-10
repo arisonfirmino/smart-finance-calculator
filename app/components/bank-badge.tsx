@@ -1,11 +1,12 @@
 import Image from "next/image";
 
-interface BankItemProps {
+interface BankBadgeProps {
   icon: string;
   name?: string;
+  fontSize?: string;
 }
 
-const BankItem = ({ icon, name }: BankItemProps) => {
+const BankBadge = ({ icon, name, fontSize }: BankBadgeProps) => {
   return (
     <div className="flex items-center gap-1.5">
       <Image
@@ -15,9 +16,9 @@ const BankItem = ({ icon, name }: BankItemProps) => {
         width={434}
         className="max-w-3.5 min-w-3.5 rounded"
       />
-      {name && <p className="text-xs">{name}</p>}
+      {name && <p className={fontSize ? fontSize : "text-xs"}>{name}</p>}
     </div>
   );
 };
 
-export default BankItem;
+export default BankBadge;
