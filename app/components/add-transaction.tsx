@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
+import { cn } from "@/app/lib/utils";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { buttonVariants } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogTrigger,
@@ -10,13 +12,13 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/app/components/ui/dialog";
-import { Button } from "@/app/components/ui/button";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/app/components/ui/tabs";
+import TransactionForm from "@/app/components/transaction-form";
 import BankForm from "@/app/components/bank-form";
 
 import { PlusIcon } from "lucide-react";
@@ -26,10 +28,8 @@ const AddTransaction = () => {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger asChild>
-        <Button size="icon">
-          <PlusIcon />
-        </Button>
+      <DialogTrigger className={cn(buttonVariants({ size: "icon" }))}>
+        <PlusIcon />
       </DialogTrigger>
       <DialogContent>
         <VisuallyHidden>
@@ -43,7 +43,7 @@ const AddTransaction = () => {
             <TabsTrigger value="bank">Banco</TabsTrigger>
           </TabsList>
           <TabsContent value="transaction">
-            Adicionar nova transação
+            <TransactionForm onClose={() => setIsDialogOpen(false)} />
           </TabsContent>
           <TabsContent value="bank">
             <BankForm onClose={() => setIsDialogOpen(false)} />

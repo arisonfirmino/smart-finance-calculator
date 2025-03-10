@@ -8,30 +8,52 @@ import {
 
 import { formatCurrency } from "@/app/helpers/formatCurrency";
 
-import { DotIcon, Trash2Icon, TrendingDownIcon } from "lucide-react";
+import {
+  DotIcon,
+  Trash2Icon,
+  TrendingDownIcon,
+  TrendingUpIcon,
+} from "lucide-react";
 
-const TransactionItem = () => {
+import { Prisma } from "@prisma/client";
+import { formatDate } from "@/app/helpers/formatDate";
+
+interface TransactionItemProps {
+  transaction: Prisma.TransactionGetPayload<{
+    include: { bank: true };
+  }>;
+}
+
+const TransactionItem = ({ transaction }: TransactionItemProps) => {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
         <AccordionTrigger>
           <span className="flex items-center gap-2">
-            <TrendingDownIcon size={16} className="text-red-600" />
-            Nome da transação
+            {transaction.type === "income" ? (
+              <TrendingUpIcon size={16} className="text-green-500" />
+            ) : (
+              <TrendingDownIcon size={16} className="text-red-600" />
+            )}
+            {transaction.label}
           </span>
         </AccordionTrigger>
         <AccordionContent className="space-y-1">
           <div className="flex items-center gap-1">
-            <p className="font-medium">{formatCurrency(500)}</p>
+            <p className="font-medium">
+              {formatCurrency(Number(transaction.value))}
+            </p>
             <DotIcon size={16} className="text-muted-foreground" />
             <BankItem
-              icon="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cc/07/70/cc07706c-ff82-af3e-4186-421737752377/Varejo-AppIcon-0-0-1x_U007emarketing-0-7-0-0-85-220.png/434x0w.webp"
-              name="Itaú"
+              icon={transaction.bank.icon}
+              name={transaction.bank.name}
             />
           </div>
 
           <div className="flex items-center justify-between">
-            <p className="text-muted-foreground text-xs">10 de jan, 2025</p>
+            <p className="text-muted-foreground text-xs">
+              {formatDate(transaction.date)}
+            </p>
             <Trash2Icon size={14} className="text-red-600" />
           </div>
         </AccordionContent>

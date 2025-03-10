@@ -23,7 +23,7 @@ const Home = async () => {
 
   return (
     <section className="flex flex-col gap-5 md:flex-row">
-      <div className="w-full space-y-5">
+      <div className="w-full space-y-5 md:max-w-1/2">
         <Card className="rounded-2xl">
           <CardHeader className="pr-3">
             <div className="flex items-center gap-2">
@@ -35,19 +35,19 @@ const Home = async () => {
           </CardHeader>
 
           <CardContent className="p-2">
-            <Balance user={JSON.parse(JSON.stringify(user))} />
+            <Balance user={user} />
           </CardContent>
         </Card>
 
-        <BanksSheet banks={JSON.parse(JSON.stringify(user.banks))} />
+        <BanksSheet banks={user.banks} />
 
         <div className="flex gap-5">
-          <TotalAmount type="income" total={500} />
-          <TotalAmount type="expense" total={500} />
+          <TotalAmount type="income" total={Number(user.total_incomes)} />
+          <TotalAmount type="expense" total={Number(user.total_expenses)} />
         </div>
       </div>
 
-      <TransactionHistory />
+      <TransactionHistory transactions={user.transactions} />
     </section>
   );
 };

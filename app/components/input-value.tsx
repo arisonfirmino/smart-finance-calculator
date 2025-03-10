@@ -24,7 +24,10 @@ const InputValue = ({ value, error, onChange }: InputValueProps) => {
     <Input
       value={formatCurrency(value)}
       onChange={(e) => onChange(parseCurrency(e.target.value))}
-      className={cn(error && "border-red-600 focus-visible:ring-red-600")}
+      className={cn(
+        error &&
+          "border-red-600 focus-visible:border-red-600 focus-visible:ring-red-600",
+      )}
     />
   );
 };
