@@ -12,6 +12,8 @@ import BanksSheet from "@/app/(home)/components/banks/banks-sheet";
 import TransactionHistory from "@/app/(home)/components/history/transaction-history";
 import TotalAmount from "@/app/(home)/components/total-amount";
 
+import { Transaction } from "@prisma/client";
+
 const Home = async () => {
   const session = await getServerSession(authOptions);
 
@@ -42,8 +44,20 @@ const Home = async () => {
         <BanksSheet banks={user.banks} />
 
         <div className="flex gap-5">
-          <TotalAmount type="income" total={Number(user.total_incomes)} />
-          <TotalAmount type="expense" total={Number(user.total_expenses)} />
+          <TotalAmount
+            type="income"
+            total={Number(user.total_incomes)}
+            transactions={user.transactions.filter(
+              (t: Transaction) => t.type === "income",
+            )}
+          />
+          <TotalAmount
+            type="expense"
+            total={Number(user.total_expenses)}
+            transactions={user.transactions.filter(
+              (t: Transaction) => t.type === "expense",
+            )}
+          />
         </div>
       </div>
 

@@ -22,12 +22,17 @@ import {
 
 import { formatCurrency } from "@/app/helpers/formatCurrency";
 
+import { Prisma } from "@prisma/client";
+
 interface TotalAmountProps {
   type: "income" | "expense";
   total: number;
+  transactions: Prisma.TransactionGetPayload<{
+    include: { bank: true };
+  }>[];
 }
 
-const TotalAmount = ({ type, total }: TotalAmountProps) => {
+const TotalAmount = ({ type, total, transactions }: TotalAmountProps) => {
   const [showLabel, setShowLabel] = useState(false);
 
   return (
@@ -67,7 +72,13 @@ const TotalAmount = ({ type, total }: TotalAmountProps) => {
           </SheetDescription>
         </SheetHeader>
 
-        <TransactionsList />
+        {transactions.length > 0 ? (
+          <TransactionsList transactions={transactions} />
+        ) : (
+          <p className="text-muted-foreground text-center text-sm">
+            Nenhuma {type === "income" ? "receita" : "despesa"} registrada.
+          </p>
+        )}
       </SheetContent>
     </Sheet>
   );
