@@ -29,7 +29,7 @@ const TransactionItem = ({ transaction }: TransactionItemProps) => {
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
         <AccordionTrigger>
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 capitalize">
             {transaction.type === "income" ? (
               <TrendingUpIcon size={16} className="text-green-500" />
             ) : (

@@ -1,4 +1,5 @@
 import TransactionItem from "@/app/(home)/components/history/transaction-item";
+import { sortTransactions } from "@/app/helpers/sortTransactions";
 
 import { Prisma } from "@prisma/client";
 
@@ -9,12 +10,7 @@ interface TransactionsListProps {
 }
 
 const TransactionsList = ({ transactions }: TransactionsListProps) => {
-  const filteredTransactions = [...transactions].sort((a, b) => {
-    const dateComparison =
-      new Date(b.date).getTime() - new Date(a.date).getTime();
-    if (dateComparison !== 0) return dateComparison;
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-  });
+  const filteredTransactions = sortTransactions({ transactions });
 
   return (
     <ul className="space-y-2.5">

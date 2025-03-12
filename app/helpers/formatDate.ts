@@ -4,3 +4,7 @@ import { ptBR } from "date-fns/locale";
 export const formatDate = (date: Date) => {
   return format(date, "dd 'de' MMM, yyyy", { locale: ptBR });
 };
+
+export const formatChartDate = (date: Date) => {
+  return format(date, "dd MMM", { locale: ptBR });
+};

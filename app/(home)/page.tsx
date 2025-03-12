@@ -11,6 +11,7 @@ import Balance from "@/app/(home)/components/balance";
 import BanksSheet from "@/app/(home)/components/banks/banks-sheet";
 import TransactionHistory from "@/app/(home)/components/history/transaction-history";
 import TotalAmount from "@/app/(home)/components/total-amount";
+import Chart from "@/app/(home)/components/chart";
 
 import { Transaction } from "@prisma/client";
 
@@ -43,7 +44,7 @@ const Home = async () => {
 
         <BanksSheet banks={user.banks} />
 
-        <div className="flex gap-5">
+        <div className="flex w-full gap-5">
           <TotalAmount
             type="income"
             total={Number(user.total_incomes)}
@@ -59,6 +60,10 @@ const Home = async () => {
             )}
           />
         </div>
+
+        {user.transactions.length > 0 && (
+          <Chart transactions={user.transactions} />
+        )}
       </div>
 
       <TransactionHistory transactions={user.transactions} />
