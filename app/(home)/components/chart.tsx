@@ -62,7 +62,7 @@ const Chart = ({ transactions }: ChartProps) => {
       <AreaChart
         accessibilityLayer
         data={chartData}
-        margin={{ left: 16.01, right: 16.01 }}
+        margin={{ left: 20, right: 20 }}
       >
         <CartesianGrid vertical={false} />
         <XAxis dataKey="date" tickLine={false} axisLine={false} />
@@ -71,19 +71,19 @@ const Chart = ({ transactions }: ChartProps) => {
           content={<ChartTooltipContent indicator="line" />}
         />
         <Area
-          dataKey="income"
-          type="natural"
-          fill="#22C55E"
-          fillOpacity={0.2}
-          stroke="#22C55E"
-          stackId="a"
-        />
-        <Area
           dataKey="expense"
           type="natural"
           fill="#DC2626"
           fillOpacity={0.2}
           stroke="#DC2626"
+          stackId="a"
+        />
+        <Area
+          dataKey="income"
+          type="natural"
+          fill="#22C55E"
+          fillOpacity={0.2}
+          stroke="#22C55E"
           stackId="a"
         />
         <ChartLegend content={<ChartLegendContent />} />
