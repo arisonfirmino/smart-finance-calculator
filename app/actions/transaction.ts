@@ -54,3 +54,48 @@ export const addTransaction = async ({
 
   revalidatePath("/");
 };
+
+export const deleteTransaction = async ({ id }: { id: string }) => {
+  if (!id) throw new Error("");
+
+  const transaction = await db.transaction.findUnique({
+    where: { id },
+    include: { user: true, bank: true },
+  });
+
+  if (!transaction) throw new Error("");
+
+  await db.transaction.delete({
+    where: { id },
+  });
+
+  await db.bank.update({
+    where: { id: transaction.bank.id },
+    data: {
+      current_balance:
+        transaction.type === "income"
+          ? { decrement: transaction.value }
+          : { increment: transaction.value },
+    },
+  });
+
+  await db.user.update({
+    where: { id: transaction.user.id },
+    data: {
+      balance:
+        transaction.type === "income"
+          ? { decrement: transaction.value }
+          : { increment: transaction.value },
+      total_incomes:
+        transaction.type === "income"
+          ? { decrement: transaction.value }
+          : undefined,
+      total_expenses:
+        transaction.type === "expense"
+          ? { decrement: transaction.value }
+          : undefined,
+    },
+  });
+
+  revalidatePath("/");
+};

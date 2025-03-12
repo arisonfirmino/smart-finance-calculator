@@ -8,15 +8,11 @@ import {
 
 import { formatCurrency } from "@/app/helpers/formatCurrency";
 
-import {
-  DotIcon,
-  Trash2Icon,
-  TrendingDownIcon,
-  TrendingUpIcon,
-} from "lucide-react";
+import { DotIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 
 import { Prisma } from "@prisma/client";
 import { formatDate } from "@/app/helpers/formatDate";
+import DeleteTransaction from "./delete-transaction";
 
 interface TransactionItemProps {
   transaction: Prisma.TransactionGetPayload<{
@@ -54,7 +50,7 @@ const TransactionItem = ({ transaction }: TransactionItemProps) => {
             <p className="text-muted-foreground text-xs">
               {formatDate(transaction.date)}
             </p>
-            <Trash2Icon size={14} className="text-red-600" />
+            <DeleteTransaction id={transaction.id} />
           </div>
         </AccordionContent>
       </AccordionItem>
