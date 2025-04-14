@@ -1,9 +1,10 @@
 import { Button } from "@/app/components/ui/button";
+import Menu from "@/app/components/menu";
 import UserAvatar from "@/app/components/user-avatar";
 import Balance from "@/app/components/balance";
 import TotalAmount from "@/app/components/total-amount";
 
-import { EllipsisVerticalIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 
 const Header = () => {
   return (
@@ -14,10 +15,7 @@ const Header = () => {
         </Button>
 
         <h1 className="font-medium">Jhon Doe</h1>
-
-        <Button size="icon" variant="ghost">
-          <EllipsisVerticalIcon />
-        </Button>
+        <Menu />
       </div>
 
       <UserAvatar />
