@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardFooter } from "@/app/components/ui/card";
-import ChipIcon from "@/app/components/banks/chip-icon";
-import BankBadge from "@/app/components/banks/bank-badge";
+import ChipIcon from "@/app/components/bank/chip-icon";
+import BankBadge from "@/app/components/bank/bank-badge";
 
 const BankItem = () => {
   const bank = {

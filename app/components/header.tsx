@@ -1,10 +1,8 @@
-import { Button } from "@/app/components/ui/button";
+import NewTransaction from "@/app/components/transaction/new-transaction";
 import Menu from "@/app/components/menu";
 import UserAvatar from "@/app/components/user-avatar";
 import Balance from "@/app/components/balance";
 import TotalAmount from "@/app/components/total-amount";
-
-import { PlusIcon } from "lucide-react";
 
 import { User } from "@prisma/client";
 
@@ -16,10 +14,7 @@ const Header = ({ user }: HeaderProps) => {
   return (
     <header className="flex flex-col items-center gap-3">
       <div className="flex w-full items-center justify-between px-2.5 pt-2.5">
-        <Button size="icon" variant="ghost">
-          <PlusIcon />
-        </Button>
-
+        <NewTransaction />
         <h1 className="font-medium">{user.name}</h1>
         <Menu />
       </div>

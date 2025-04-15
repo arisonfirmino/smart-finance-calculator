@@ -1,6 +1,6 @@
 import banks from "@/banks.json";
 
-import BankPicker from "@/app/components/banks/bank-picker";
+import BankPicker from "@/app/components/bank/bank-picker";
 import { Input } from "@/app/components/ui/input";
 import SubmitButton from "@/app/components/submit-button";
 

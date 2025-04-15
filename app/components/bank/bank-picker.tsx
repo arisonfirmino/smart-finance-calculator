@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
-import BankBadge from "@/app/components/banks/bank-badge";
+import BankBadge from "@/app/components/bank/bank-badge";
 
 const BankPicker = ({ banks }: { banks: any }) => {
   return (

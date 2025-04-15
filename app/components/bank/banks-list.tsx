@@ -1,5 +1,5 @@
-import NewBank from "@/app/components/banks/new-bank";
-import BankItem from "@/app/components/banks/bank-item";
+import NewBank from "@/app/components/bank/new-bank";
+import BankItem from "@/app/components/bank/bank-item";
 
 const BanksList = () => {
   return (

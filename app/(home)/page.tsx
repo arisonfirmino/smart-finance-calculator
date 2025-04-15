@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/app/helpers/getUser";
 
 import Header from "@/app/components/header";
-import BanksList from "@/app/components/banks/banks-list";
+import BanksList from "@/app/components/bank/banks-list";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);

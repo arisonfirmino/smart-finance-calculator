@@ -85,7 +85,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="drawer-header"
-      className={cn("flex flex-col p-5", className)}
+      className={cn("flex flex-col p-5 text-center", className)}
       {...props}
     />
   );

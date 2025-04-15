@@ -10,7 +10,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/app/components/ui/drawer";
-import BankForm from "@/app/components/banks/bank-form";
+import BankForm from "@/app/components/bank/bank-form";
 
 import { PlusIcon } from "lucide-react";
 
