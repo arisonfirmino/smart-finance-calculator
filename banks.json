@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Banco do Brasil",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/4c/a0/ee/4ca0eebd-091d-98b3-4d6f-c2acfe4eda83/AppIcon-0-0-1x_U007emarketing-0-11-0-0-sRGB-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "Banco Inter",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3a/10/6a/3a106a61-a234-703e-1d12-16e23d9eb5a6/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "Bradesco",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/9f/49/01/9f490165-e8a2-0713-8e3d-dccae72b7174/AppIcon-1x_U007ephone-0-10-0-sRGB-85-220-0.png/246x0w.webp"
+  },
+  {
+    "name": "BTG Pactual",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/7b/79/7e/7b797eb6-6259-1c3b-5d2a-fa9165ff29a2/AppIcon-0-0-1x_U007epad-0-0-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "Caixa Econômica Federal",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/24/28/09/2428090f-ee02-04fc-3088-9fe05ab2cbbc/AppIcon-0-0-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "C6 Bank",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f3/1c/5d/f31c5d92-a084-7f4e-1cab-31549e433d18/AppIcon-0-1x_U007emarketing-0-7-0-85-220-0.jpeg/434x0w.webp"
+  },
+  {
+    "name": "Itaú",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/95/b7/5b/95b75bba-ef31-d06d-0beb-9aebd0cdb175/Varejo-AppIcon-0-0-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "Nubank",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/99/50/cb/9950cb6b-b360-03e4-fee2-640b95c56077/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "PagBank",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/dc/48/d3/dc48d3fc-5e97-427e-d4f8-e7dc83a43463/PBAppIcon-0-0-1x_U007ephone-0-1-0-sRGB-0-85-220.png/434x0w.webp"
+  },
+  {
+    "name": "PicPay",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/91/0f/3d/910f3db7-dcb9-8b6a-b0b5-ae723172018c/AppIcon-1-0-0-1x_U007emarketing-0-10-0-0-85-220.png/434x0w.webp"
+  },
+  {
+    "name": "Santander",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/96/26/a09626b1-62a9-0fee-e117-259c0fc0539c/AppIcon-1x_U007emarketing-0-7-0-sRGB-85-220-0.png/246x0w.webp"
+  },
+  {
+    "name": "Sicredi",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/27/4e/7e/274e7e34-dab0-41a7-aa37-52af97d1e3de/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/246x0w.webp"
+  },
+  {
+    "name": "Sicoob",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/14/d7/ae/14d7ae1a-74a4-6a8d-7a62-a0eb137c8f15/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/434x0w.webp"
+  }
+]
