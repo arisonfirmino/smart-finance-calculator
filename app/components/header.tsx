@@ -6,7 +6,13 @@ import TotalAmount from "@/app/components/total-amount";
 
 import { PlusIcon } from "lucide-react";
 
-const Header = () => {
+import { User } from "@prisma/client";
+
+interface HeaderProps {
+  user: User;
+}
+
+const Header = ({ user }: HeaderProps) => {
   return (
     <header className="flex flex-col items-center gap-3">
       <div className="flex w-full items-center justify-between px-2.5 pt-2.5">
@@ -14,17 +20,17 @@ const Header = () => {
           <PlusIcon />
         </Button>
 
-        <h1 className="font-medium">Jhon Doe</h1>
+        <h1 className="font-medium">{user.name}</h1>
         <Menu />
       </div>
 
-      <UserAvatar />
+      <UserAvatar user={user} />
 
-      <Balance />
+      <Balance balance={Number(user.balance)} />
 
       <div className="flex w-full gap-5 px-5">
-        <TotalAmount type="income" />
-        <TotalAmount type="expense" />
+        <TotalAmount type="income" total={Number(user.total_incomes)} />
+        <TotalAmount type="expense" total={Number(user.total_expenses)} />
       </div>
     </header>
   );
