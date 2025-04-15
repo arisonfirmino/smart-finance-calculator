@@ -1,5 +1,3 @@
-import banks from "@/banks.json";
-
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
 import {
@@ -16,10 +14,21 @@ import TransactionForm from "@/app/components/transaction/transaction-form";
 
 import { PlusIcon } from "lucide-react";
 
-const NewTransaction = () => {
+import { Prisma } from "@prisma/client";
+
+interface NewTransactionProps {
+  user: Prisma.UserGetPayload<{
+    include: {
+      banks: true;
+    };
+  }>;
+}
+
+const NewTransaction = ({ user }: NewTransactionProps) => {
   return (
     <Drawer>
       <DrawerTrigger
+        disabled={user.banks.length === 0}
         className={cn(
           buttonVariants({
             size: "icon",
@@ -38,7 +47,7 @@ const NewTransaction = () => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <TransactionForm banks={banks} />
+        <TransactionForm banks={user.banks} />
 
         <DrawerFooter>
           <DrawerClose>Cancelar</DrawerClose>

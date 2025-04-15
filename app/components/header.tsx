@@ -4,17 +4,21 @@ import UserAvatar from "@/app/components/user-avatar";
 import Balance from "@/app/components/balance";
 import TotalAmount from "@/app/components/total-amount";
 
-import { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 interface HeaderProps {
-  user: User;
+  user: Prisma.UserGetPayload<{
+    include: {
+      banks: true;
+    };
+  }>;
 }
 
 const Header = ({ user }: HeaderProps) => {
   return (
     <header className="flex flex-col items-center gap-3">
       <div className="flex w-full items-center justify-between px-2.5 pt-2.5">
-        <NewTransaction />
+        <NewTransaction user={user} />
         <h1 className="font-medium">{user.name}</h1>
         <Menu />
       </div>

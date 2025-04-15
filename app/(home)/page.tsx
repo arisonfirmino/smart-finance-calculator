@@ -18,7 +18,7 @@ const Home = async () => {
   return (
     <main>
       <Header user={user} />
-      <BanksList />
+      <BanksList banks={user.banks} />
     </main>
   );
 };

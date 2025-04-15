@@ -50,5 +50,21 @@ model User {
   total_incomes  Decimal @default(0.00) @db.Decimal(10, 2)
   total_expenses Decimal @default(0.00) @db.Decimal(10, 2)
 
+  banks Bank[]
+
   @@map("users")
+}
+
+model Bank {
+  id            String   @id @default(cuid())
+  name          String
+  icon          String
+  initial_value Decimal  @default(0.00) @db.Decimal(10, 2)
+  current_value Decimal  @default(0.00) @db.Decimal(10, 2)
+  created_at    DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@map("banks")
 }
