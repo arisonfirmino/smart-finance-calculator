@@ -1,3 +1,7 @@
+"use client";
+
+import { signOut } from "next-auth/react";
+
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
 import {
@@ -30,17 +34,22 @@ const Menu = () => {
           <CogIcon />
           Configurações
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem>
           <Trash2Icon />
           Zerar bancos
         </DropdownMenuItem>
+
         <DropdownMenuItem>
           <EraserIcon />
           Zerar histórico
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+
+        <DropdownMenuItem onClick={async () => await signOut()}>
           <LogOutIcon />
           Encerrar sessão
         </DropdownMenuItem>
