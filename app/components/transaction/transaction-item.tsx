@@ -19,11 +19,14 @@ interface TransactionItemProps {
       bank: true;
     };
   }>;
+  isLast: boolean;
 }
 
-const TransactionItem = ({ transaction }: TransactionItemProps) => {
+const TransactionItem = ({ transaction, isLast }: TransactionItemProps) => {
   return (
-    <Card className="border-border/5 relative flex-row items-center gap-2.5 border-b p-5">
+    <Card
+      className={`border-border/5 relative flex-row items-center gap-2.5 p-5 ${isLast ? "" : "border-b"}`}
+    >
       <span
         className={`flex size-9 items-center justify-center rounded-full ${transaction.type === "income" ? "bg-green-500/15 text-green-500" : "bg-red-600/15 text-red-600"}`}
       >
