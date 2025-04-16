@@ -7,9 +7,21 @@ import {
 } from "@/app/components/ui/select";
 import BankBadge from "@/app/components/bank/bank-badge";
 
-const BankPicker = ({ banks }: { banks: any }) => {
+interface BankPickerProps {
+  banks: any[];
+  onSelect: (bank: any) => void;
+}
+
+const BankPicker = ({ banks, onSelect }: BankPickerProps) => {
   return (
-    <Select>
+    <Select
+      onValueChange={(value) => {
+        const selectedBank = banks.find((bank) => bank.name === value);
+        if (selectedBank) {
+          onSelect(selectedBank);
+        }
+      }}
+    >
       <SelectTrigger>
         <SelectValue placeholder="Selecione um banco" />
       </SelectTrigger>

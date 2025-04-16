@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
 import {
@@ -15,8 +19,10 @@ import BankForm from "@/app/components/bank/bank-form";
 import { PlusIcon } from "lucide-react";
 
 const NewBank = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger
         className={cn(
           buttonVariants({
@@ -37,7 +43,7 @@ const NewBank = () => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <BankForm />
+        <BankForm onSuccess={() => setOpen(false)} />
 
         <DrawerFooter>
           <DrawerClose>Cancelar</DrawerClose>

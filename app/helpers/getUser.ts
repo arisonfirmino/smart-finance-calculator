@@ -4,7 +4,9 @@ export const getUser = async (id: string) => {
   const user = await db.user.findUnique({
     where: { id },
     include: {
-      banks: true,
+      banks: {
+        orderBy: { created_at: "desc" },
+      },
     },
   });
 
