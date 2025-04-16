@@ -7,6 +7,11 @@ export const getUser = async (id: string) => {
       banks: {
         orderBy: { created_at: "desc" },
       },
+      transactions: {
+        include: {
+          bank: true,
+        },
+      },
     },
   });
 

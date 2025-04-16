@@ -5,6 +5,7 @@ import { getUser } from "@/app/helpers/getUser";
 
 import Header from "@/app/components/header";
 import BanksList from "@/app/components/bank/banks-list";
+import TransactionsList from "@/app/components/transaction/transactions-list";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -19,6 +20,7 @@ const Home = async () => {
     <main>
       <Header user={user} />
       <BanksList banks={user.banks} />
+      <TransactionsList transactions={user.transactions} />
     </main>
   );
 };
