@@ -4,11 +4,13 @@ import {
   CardDescription,
   CardTitle,
 } from "@/app/components/ui/card";
+import BankBadge from "@/app/components/bank/bank-badge";
 
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, DotIcon } from "lucide-react";
+
+import { formatCurrency } from "@/app/helpers/formatCurrency";
 
 import { Prisma } from "@prisma/client";
-import { formatCurrency } from "@/app/helpers/formatCurrency";
 
 interface TransactionItemProps {
   transaction: Prisma.TransactionGetPayload<{
@@ -20,7 +22,7 @@ interface TransactionItemProps {
 
 const TransactionItem = ({ transaction }: TransactionItemProps) => {
   return (
-    <Card className="border-border/10 flex-row items-center gap-2.5 border-b p-5">
+    <Card className="border-border/5 flex-row items-center gap-2.5 border-b p-5">
       <span
         className={`flex size-9 items-center justify-center rounded-full ${transaction.type === "income" ? "bg-green-500/15 text-green-500" : "bg-red-600/15 text-red-600"}`}
       >
@@ -32,8 +34,10 @@ const TransactionItem = ({ transaction }: TransactionItemProps) => {
       </span>
       <CardContent className="capitalize">
         <CardTitle>{transaction.title}</CardTitle>
-        <CardDescription>
+        <CardDescription className="flex items-center gap-1">
           {formatCurrency(Number(transaction.amount))}
+          <DotIcon size={16} className="text-foreground/50" />
+          <BankBadge bank={transaction.bank} showName={true} />
         </CardDescription>
       </CardContent>
     </Card>

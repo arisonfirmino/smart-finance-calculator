@@ -23,9 +23,9 @@ const TransactionsList = ({ transactions }: TransactionsProps) => {
   }, {});
 
   return (
-    <div className="border-border/10 border-t">
+    <div className="border-border/15 border-t">
       {Object.entries(filteredTransactions).map(([date, transactions]) => (
-        <div key={date}>
+        <div key={date} className="border-border/15 border-b">
           <h3 className="px-5 pt-5 text-xs font-medium uppercase">{date}</h3>
 
           <ul className="space-y-2">

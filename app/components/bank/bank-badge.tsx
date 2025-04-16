@@ -19,7 +19,7 @@ const BankBadge = ({ bank, showName = false }: BankBadgeProps) => {
         className="size-3 rounded"
       />
 
-      {showName && <p className="text-xs">{bank.name}</p>}
+      {showName && <p className="text-xs font-normal">{bank.name}</p>}
     </div>
   );
 };
