@@ -7,6 +7,8 @@ import Header from "@/app/components/header";
 import BanksList from "@/app/components/bank/banks-list";
 import TransactionsList from "@/app/components/transaction/transactions-list";
 
+import { ChartColumnIcon, SearchIcon } from "lucide-react";
+
 const Home = async () => {
   const session = await getServerSession(authOptions);
 
@@ -19,8 +21,24 @@ const Home = async () => {
   return (
     <main>
       <Header user={user} />
+
       <BanksList banks={user.banks} />
-      <TransactionsList transactions={user.transactions} />
+
+      <div className="flex items-center justify-between p-5">
+        <h2 className="font-semibold">Histórico</h2>
+        <div className="item-center flex gap-5">
+          <SearchIcon size={16} />
+          <ChartColumnIcon size={16} />
+        </div>
+      </div>
+
+      {user.transactions.length > 0 ? (
+        <TransactionsList transactions={user.transactions} />
+      ) : (
+        <p className="text-foreground/50 text-center text-sm">
+          Seu histórico está vazio por enquanto.
+        </p>
+      )}
     </main>
   );
 };
