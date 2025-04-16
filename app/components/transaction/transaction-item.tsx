@@ -45,7 +45,7 @@ const TransactionItem = ({ transaction, isLast }: TransactionItemProps) => {
         </CardDescription>
       </CardContent>
 
-      <DeleteTransaction transactionId={transaction.id} />
+      <DeleteTransaction transaction={transaction} />
     </Card>
   );
 };

@@ -19,7 +19,13 @@ import { EllipsisIcon, LoaderCircleIcon } from "lucide-react";
 
 import { deleteTransaction } from "@/app/actions/transaction";
 
-const DeleteTransaction = ({ transactionId }: { transactionId: string }) => {
+import { Transaction } from "@prisma/client";
+
+interface DeleteTransactionProps {
+  transaction: Pick<Transaction, "id" | "type">;
+}
+
+const DeleteTransaction = ({ transaction }: DeleteTransactionProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: session } = useSession();
@@ -29,7 +35,10 @@ const DeleteTransaction = ({ transactionId }: { transactionId: string }) => {
 
     setIsLoading(true);
 
-    await deleteTransaction({ userId: session.user.id, transactionId });
+    await deleteTransaction({
+      userId: session.user.id,
+      transactionId: transaction.id,
+    });
 
     setIsLoading(false);
   };
@@ -50,8 +59,9 @@ const DeleteTransaction = ({ transactionId }: { transactionId: string }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Excluir transação</AlertDialogTitle>
           <AlertDialogDescription>
-            Essa operação removerá definitivamente esta entrada e recalculará os
-            saldos associados. Deseja prosseguir?
+            Essa operação removerá definitivamente esta{" "}
+            {transaction.type === "income" ? "receita" : "despesa"} e
+            recalculará os saldos associados. Deseja prosseguir?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
