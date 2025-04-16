@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
 import {
@@ -25,8 +29,10 @@ interface NewTransactionProps {
 }
 
 const NewTransaction = ({ user }: NewTransactionProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger
         disabled={user.banks.length === 0}
         className={cn(
@@ -47,7 +53,7 @@ const NewTransaction = ({ user }: NewTransactionProps) => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <TransactionForm banks={user.banks} />
+        <TransactionForm banks={user.banks} onSuccess={() => setOpen(false)} />
 
         <DrawerFooter>
           <DrawerClose>Cancelar</DrawerClose>

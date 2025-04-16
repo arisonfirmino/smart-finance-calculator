@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 import DatePicker from "@/app/components/transaction/date-picker";
 import BankPicker from "@/app/components/bank/bank-picker";
@@ -9,10 +10,24 @@ import CurrencyInput from "@/app/components/currency-input";
 import TypePicker from "@/app/components/transaction/type-picker";
 import SubmitButton from "@/app/components/submit-button";
 
-const TransactionForm = ({ banks }: { banks: any }) => {
+import { addTransaction } from "@/app/actions/transaction";
+
+interface TransactionFormProps {
+  banks: any[];
+  onSuccess: () => void;
+}
+
+const TransactionForm = ({ banks, onSuccess }: TransactionFormProps) => {
   const [date, setDate] = useState<Date>(new Date());
+  const [bank, setBank] = useState<any>(null);
+  const [title, setTitle] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [type, setType] = useState<"income" | "expense">("expense");
+
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data: session } = useSession();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(event.target.value);
@@ -22,19 +37,85 @@ const TransactionForm = ({ banks }: { banks: any }) => {
     }
   };
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!session) return;
+
+    if (!date) {
+      setError("Por favor, selecione uma data válida.");
+      return;
+    }
+
+    if (!bank) {
+      setError("Por favor, selecione um banco.");
+      return;
+    }
+
+    if (!title) {
+      setError("Por favor, insira um título para a transação.");
+      return;
+    }
+
+    if (amount <= 0) {
+      setError("O valor deve ser maior que zero.");
+      return;
+    }
+
+    if (!type) {
+      setError("Por favor, selecione o tipo da transação.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    const response = await addTransaction({
+      userId: session.user.id,
+      bankId: bank.id,
+      title,
+      type,
+      amount,
+      date,
+    });
+
+    if (response?.error) {
+      setError(response.error);
+      setIsLoading(false);
+      return;
+    }
+
+    setBank(null);
+    setAmount(0);
+    setTitle("");
+    setType("expense");
+    setError("");
+    setIsLoading(false);
+    onSuccess();
+  };
+
   return (
-    <form className="flex flex-col gap-5 px-5">
+    <form onSubmit={onSubmit} className="flex flex-col gap-5 px-5">
       <DatePicker date={date} setDate={setDate} />
 
-      <BankPicker banks={banks} />
+      <BankPicker banks={banks} onSelect={setBank} />
 
-      <Input placeholder="Título" />
+      <Input
+        placeholder="Título"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
       <CurrencyInput value={amount} onChange={onChange} />
 
       <TypePicker type={type} setType={setType} />
 
-      <SubmitButton isLoading={false} />
+      {error && (
+        <small className="animate-fade-right animate-duration-300 text-xs text-red-600">
+          {error}
+        </small>
+      )}
+
+      <SubmitButton isLoading={isLoading} />
     </form>
   );
 };

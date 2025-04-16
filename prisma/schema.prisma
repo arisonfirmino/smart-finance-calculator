@@ -50,13 +50,14 @@ model User {
   total_incomes  Decimal @default(0.00) @db.Decimal(10, 2)
   total_expenses Decimal @default(0.00) @db.Decimal(10, 2)
 
-  banks Bank[]
+  banks        Bank[]
+  transactions Transaction[]
 
   @@map("users")
 }
 
 model Bank {
-  id            String   @id @default(cuid())
+  id            String   @id @default(uuid())
   name          String
   icon          String
   initial_value Decimal  @default(0.00) @db.Decimal(10, 2)
@@ -66,5 +67,24 @@ model Bank {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
+  transactions Transaction[]
+
   @@map("banks")
+}
+
+model Transaction {
+  id         String   @id @default(uuid())
+  title      String
+  type       String
+  amount     Decimal  @db.Decimal(10, 2)
+  date       DateTime
+  created_at DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  bank   Bank   @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  bankId String
+
+  @@map("transactions")
 }
