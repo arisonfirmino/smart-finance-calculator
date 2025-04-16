@@ -73,3 +73,68 @@ export const addTransaction = async ({
 
   revalidatePath("/");
 };
+
+interface DeleteTransactionProps {
+  userId: string;
+  transactionId: string;
+}
+
+export const deleteTransaction = async ({
+  userId,
+  transactionId,
+}: DeleteTransactionProps) => {
+  if (!userId) throw new Error("O ID do usuário é obrigatório.");
+  if (!transactionId) throw new Error("O ID da transação é obrigatório.");
+
+  const [user, transaction] = await Promise.all([
+    db.user.findUnique({ where: { id: userId } }),
+    db.transaction.findUnique({
+      where: { id: transactionId },
+      include: { user: true, bank: true },
+    }),
+  ]);
+
+  if (!user)
+    throw new Error("Usuário não encontrado. Verifique o ID fornecido.");
+  if (!transaction)
+    throw new Error("Transação não encontrada. Verifique o ID fornecido.");
+
+  if (transaction.user.id !== userId)
+    throw new Error(
+      "Ação não autorizada. Esta transação não pertence ao usuário informado.",
+    );
+
+  await db.transaction.delete({
+    where: { id: transactionId },
+  });
+
+  await db.user.update({
+    where: { id: userId },
+    data: {
+      balance:
+        transaction.type === "income"
+          ? { decrement: transaction.amount }
+          : { increment: transaction.amount },
+      total_incomes:
+        transaction.type === "income"
+          ? { decrement: transaction.amount }
+          : undefined,
+      total_expenses:
+        transaction.type === "expense"
+          ? { decrement: transaction.amount }
+          : undefined,
+    },
+  });
+
+  await db.bank.update({
+    where: { id: transaction.bank.id },
+    data: {
+      current_value:
+        transaction.type === "income"
+          ? { decrement: transaction.amount }
+          : { increment: transaction.amount },
+    },
+  });
+
+  revalidatePath("/");
+};
