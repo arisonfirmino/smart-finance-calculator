@@ -5,9 +5,10 @@ import { getUser } from "@/app/helpers/getUser";
 
 import Header from "@/app/components/header";
 import BanksList from "@/app/components/bank/banks-list";
+import FinancialChart from "@/app/components/chart/financial-chart";
 import TransactionsList from "@/app/components/transaction/transactions-list";
 
-import { ChartColumnIcon, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -28,7 +29,7 @@ const Home = async () => {
         <h2 className="font-semibold">Histórico</h2>
         <div className="item-center flex gap-5">
           <SearchIcon size={16} />
-          <ChartColumnIcon size={16} />
+          <FinancialChart user={user} />
         </div>
       </div>
 
