@@ -1,0 +1,55 @@
+import { cn } from "@/app/lib/utils";
+import { buttonVariants } from "@/app/components/ui/button";
+
+import UserAvatar from "@/app/components/user-avatar";
+import Greeting from "@/app/components/header/greeting";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/app/components/ui/sheet";
+
+import { Menu01Icon } from "hugeicons-react";
+
+import { Prisma } from "@prisma/client";
+
+interface HeaderProps {
+  user: Prisma.UserGetPayload<{
+    include: {
+      banks: true;
+    };
+  }>;
+}
+
+const Header = ({ user }: HeaderProps) => {
+  return (
+    <header className="flex items-center justify-between p-5">
+      <div className="flex items-center gap-2.5">
+        <UserAvatar user={user} />
+        <Greeting user={user} />
+      </div>
+
+      <Sheet>
+        <SheetTrigger
+          className={cn(buttonVariants({ size: "icon", variant: "ghost" }))}
+        >
+          <Menu01Icon />
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Are you absolutely sure?</SheetTitle>
+            <SheetDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </header>
+  );
+};
+
+export default Header;

@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import { cn } from "@/app/lib/utils";
-import { buttonVariants } from "@/app/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -16,23 +14,18 @@ import {
 } from "@/app/components/ui/drawer";
 import BankForm from "@/app/components/bank/bank-form";
 
-import { PlusIcon } from "lucide-react";
+import { BankIcon } from "hugeicons-react";
 
 const NewBank = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger
-        className={cn(
-          buttonVariants({
-            size: "icon",
-            variant: "ghost",
-            className: "rounded-full",
-          }),
-        )}
-      >
-        <PlusIcon />
+      <DrawerTrigger className="flex cursor-pointer flex-col items-center gap-1">
+        <span className="bg-background flex size-10 items-center justify-center rounded-2xl shadow-sm">
+          <BankIcon size={16} />
+        </span>
+        <span className="text-sm font-medium">Banco</span>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>

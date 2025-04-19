@@ -12,12 +12,10 @@ interface UserAvatarProps {
 
 const UserAvatar = ({ user }: UserAvatarProps) => {
   return (
-    <div className="border-primary rounded-full border p-0.5">
-      <Avatar className="size-20">
-        <AvatarImage src={user.image ?? ""} />
-        <AvatarFallback>{user.name}</AvatarFallback>
-      </Avatar>
-    </div>
+    <Avatar>
+      <AvatarImage src={user.image ?? ""} />
+      <AvatarFallback>{user.name}</AvatarFallback>
+    </Avatar>
   );
 };
 

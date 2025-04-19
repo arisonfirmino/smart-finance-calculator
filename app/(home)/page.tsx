@@ -3,12 +3,14 @@ import { authOptions } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { getUser } from "@/app/helpers/getUser";
 
-import Header from "@/app/components/header";
-import BanksList from "@/app/components/bank/banks-list";
+import Header from "@/app/components/header/header";
+import ButtonsPanel from "@/app/components/buttons-panel";
+import Balance from "@/app/components/balance";
+import Container from "@/app/components/container";
+import TotalAmount from "@/app/components/total-amount";
+import Search from "@/app/components/search";
 import FinancialChart from "@/app/components/chart/financial-chart";
 import TransactionsList from "@/app/components/transaction/transactions-list";
-
-import { SearchIcon } from "lucide-react";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -20,26 +22,31 @@ const Home = async () => {
   if (!user) return null;
 
   return (
-    <main>
+    <main className="flex min-h-screen flex-col">
       <Header user={user} />
-
-      <BanksList banks={user.banks} />
-
-      <div className="flex items-center justify-between p-5">
-        <h2 className="font-semibold">Histórico</h2>
-        <div className="item-center flex gap-5">
-          <SearchIcon size={16} />
-          <FinancialChart user={user} />
+      <Container>
+        <div className="bg-muted flex items-center justify-between gap-5 py-5">
+          <ButtonsPanel user={user} />
+          <Balance user={user} />
         </div>
-      </div>
 
-      {user.transactions.length > 0 ? (
-        <TransactionsList transactions={user.transactions} />
-      ) : (
-        <p className="text-foreground/50 text-center text-sm">
-          Seu histórico está vazio por enquanto.
-        </p>
-      )}
+        <div className="bg-background flex-1 rounded-t-3xl">
+          <TotalAmount user={user} />
+
+          <div className="flex gap-5 px-5">
+            <Search />
+            <FinancialChart user={user} />
+          </div>
+
+          {user.transactions.length > 0 ? (
+            <TransactionsList transactions={user.transactions} />
+          ) : (
+            <p className="text-foreground/50 text-center text-sm">
+              Seu histórico está vazio por enquanto.
+            </p>
+          )}
+        </div>
+      </Container>
     </main>
   );
 };

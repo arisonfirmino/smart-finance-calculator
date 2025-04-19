@@ -7,22 +7,21 @@ import DatePicker from "@/app/components/transaction/date-picker";
 import BankPicker from "@/app/components/bank/bank-picker";
 import { Input } from "@/app/components/ui/input";
 import CurrencyInput from "@/app/components/currency-input";
-import TypePicker from "@/app/components/transaction/type-picker";
 import SubmitButton from "@/app/components/submit-button";
 
 import { addTransaction } from "@/app/actions/transaction";
 
 interface TransactionFormProps {
   banks: any[];
+  type: "income" | "expense";
   onSuccess: () => void;
 }
 
-const TransactionForm = ({ banks, onSuccess }: TransactionFormProps) => {
+const TransactionForm = ({ banks, type, onSuccess }: TransactionFormProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [bank, setBank] = useState<any>(null);
   const [title, setTitle] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
-  const [type, setType] = useState<"income" | "expense">("expense");
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -87,7 +86,6 @@ const TransactionForm = ({ banks, onSuccess }: TransactionFormProps) => {
     setBank(null);
     setAmount(0);
     setTitle("");
-    setType("expense");
     setError("");
     setIsLoading(false);
     onSuccess();
@@ -106,8 +104,6 @@ const TransactionForm = ({ banks, onSuccess }: TransactionFormProps) => {
       />
 
       <CurrencyInput value={amount} onChange={onChange} />
-
-      <TypePicker type={type} setType={setType} />
 
       {error && (
         <small className="animate-fade-right animate-duration-300 text-xs text-red-600">

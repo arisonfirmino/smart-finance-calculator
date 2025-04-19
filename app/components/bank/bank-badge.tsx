@@ -6,9 +6,10 @@ interface BankBadgeProps {
     icon: string;
   };
   showName?: boolean;
+  size?: string;
 }
 
-const BankBadge = ({ bank, showName = false }: BankBadgeProps) => {
+const BankBadge = ({ bank, showName = false, size }: BankBadgeProps) => {
   return (
     <div className="flex items-center gap-1">
       <Image
@@ -16,7 +17,7 @@ const BankBadge = ({ bank, showName = false }: BankBadgeProps) => {
         alt="bank name"
         height={434}
         width={434}
-        className="size-3 rounded"
+        className={`rounded ${size ? size : "size-3.5 min-w-3.5"}`}
       />
 
       {showName && <p className="text-xs font-normal">{bank.name}</p>}

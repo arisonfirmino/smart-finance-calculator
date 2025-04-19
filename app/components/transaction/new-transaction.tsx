@@ -1,9 +1,3 @@
-"use client";
-
-import { useState } from "react";
-
-import { cn } from "@/app/lib/utils";
-import { buttonVariants } from "@/app/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -12,11 +6,8 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/app/components/ui/drawer";
 import TransactionForm from "@/app/components/transaction/transaction-form";
-
-import { PlusIcon } from "lucide-react";
 
 import { Prisma } from "@prisma/client";
 
@@ -26,34 +17,30 @@ interface NewTransactionProps {
       banks: true;
     };
   }>;
+  type: "income" | "expense";
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 
-const NewTransaction = ({ user }: NewTransactionProps) => {
-  const [open, setOpen] = useState(false);
-
+const NewTransaction = ({ user, type, open, setOpen }: NewTransactionProps) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger
-        disabled={user.banks.length === 0}
-        className={cn(
-          buttonVariants({
-            size: "icon",
-            variant: "ghost",
-          }),
-        )}
-      >
-        <PlusIcon />
-      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Adicionar nova transação</DrawerTitle>
+          <DrawerTitle>
+            Adicionar nova {type === "income" ? "receita" : "despesa"}
+          </DrawerTitle>
           <DrawerDescription>
-            Preencha as informações abaixo para cadastrar uma nova transação à
-            sua conta.
+            Preencha as informações abaixo para cadastrar uma nova{" "}
+            {type === "income" ? "receita" : "despesa"} à sua conta.
           </DrawerDescription>
         </DrawerHeader>
 
-        <TransactionForm banks={user.banks} onSuccess={() => setOpen(false)} />
+        <TransactionForm
+          banks={user.banks}
+          type={type}
+          onSuccess={() => setOpen(false)}
+        />
 
         <DrawerFooter>
           <DrawerClose>Cancelar</DrawerClose>

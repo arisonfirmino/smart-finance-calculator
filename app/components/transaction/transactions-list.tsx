@@ -22,26 +22,22 @@ const TransactionsList = ({ transactions }: TransactionsProps) => {
     return acc;
   }, {});
 
-  return (
-    <div className="border-border/15 border-t">
-      {Object.entries(filteredTransactions).map(([date, transactions]) => (
-        <div key={date} className="border-border/15 border-b">
-          <h3 className="px-5 pt-5 text-xs font-medium uppercase">{date}</h3>
+  return Object.entries(filteredTransactions).map(([date, transactions]) => (
+    <div key={date} className="border-border/15 border-b">
+      <h3 className="px-5 pt-5 text-xs font-medium uppercase">{date}</h3>
 
-          <ul className="space-y-2">
-            {transactions.map((transaction, index) => (
-              <li key={transaction.id}>
-                <TransactionItem
-                  transaction={transaction}
-                  isLast={index === transactions.length - 1}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <ul>
+        {transactions.map((transaction, index) => (
+          <li key={transaction.id}>
+            <TransactionItem
+              transaction={transaction}
+              isLast={index === transactions.length - 1}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+  ));
 };
 
 export default TransactionsList;

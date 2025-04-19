@@ -11,15 +11,17 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/app/components/ui/drawer";
-import { Button } from "@/app/components/ui/button";
+import { Button, buttonVariants } from "@/app/components/ui/button";
 import Chart from "@/app/components/chart/chart";
 import FinancialSummaryMessage from "@/app/components/chart/financial-summary-message";
 
-import { ChartColumnIcon, RefreshCcwIcon } from "lucide-react";
+import { RefreshCcwIcon } from "lucide-react";
 
 import { formatRange } from "@/app/helpers/formatRange";
 
 import { Prisma } from "@prisma/client";
+import { cn } from "@/app/lib/utils";
+import { Analytics01Icon } from "hugeicons-react";
 
 interface FinancialChartProps {
   user: Prisma.UserGetPayload<{
@@ -34,8 +36,15 @@ const FinancialChart = ({ user }: FinancialChartProps) => {
 
   return (
     <Drawer>
-      <DrawerTrigger className="text-foreground/50 hover:text-foreground active:text-foreground cursor-pointer">
-        <ChartColumnIcon size={16} />
+      <DrawerTrigger
+        className={cn(
+          buttonVariants({
+            variant: "outline",
+            className: "size-8 rounded-xl",
+          }),
+        )}
+      >
+        <Analytics01Icon />
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="flex-row items-center justify-between p-5 pb-2.5 text-start">
