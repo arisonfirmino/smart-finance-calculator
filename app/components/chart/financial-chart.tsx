@@ -40,7 +40,7 @@ const FinancialChart = ({ user }: FinancialChartProps) => {
         className={cn(
           buttonVariants({
             variant: "outline",
-            className: "size-8 rounded-xl",
+            className: "dark:border-border/10 size-8 rounded-xl",
           }),
         )}
       >

@@ -19,7 +19,7 @@ const TotalAmount = ({ user }: TotalAmountProps) => {
       {totals.map((total) => (
         <div
           key={total.type}
-          className="border-border/30 flex w-full items-center gap-2.5 rounded-2xl border p-2.5"
+          className="border-border/30 dark:border-border/10 flex w-full items-center gap-2.5 rounded-2xl border p-2.5"
         >
           <span
             className={`flex size-10 items-center justify-center rounded-2xl ${total.type === "income" ? "bg-green-500/30 text-green-500" : "bg-red-600/30 text-red-600"}`}

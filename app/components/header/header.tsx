@@ -6,11 +6,12 @@ import Greeting from "@/app/components/header/greeting";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/app/components/ui/sheet";
+import { Separator } from "@/app/components/ui/separator";
+import LateralMenu from "@/app/components/menu/lateral-menu";
 
 import { Menu01Icon } from "hugeicons-react";
 
@@ -40,12 +41,12 @@ const Header = ({ user }: HeaderProps) => {
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
+            <SheetTitle>Configurações</SheetTitle>
           </SheetHeader>
+
+          <Separator />
+
+          <LateralMenu />
         </SheetContent>
       </Sheet>
     </header>

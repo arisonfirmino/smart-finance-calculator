@@ -42,6 +42,7 @@ const ButtonsPanel = ({ user }: ButtonsPanelProps) => {
       {type && (
         <NewTransaction user={user} type={type} open={open} setOpen={setOpen} />
       )}
+
       <NewBank />
     </div>
   );

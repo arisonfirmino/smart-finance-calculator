@@ -53,7 +53,7 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
         />
       </CardHeader>
 
-      <CardFooter className="border-border/15 flex items-center justify-between rounded-2xl border bg-black/5 p-2.5 shadow">
+      <CardFooter className="border-border/15 bg-muted flex items-center justify-between rounded-2xl border p-2.5 shadow">
         {days.map((day) => {
           const isSelected = isSameDay(day.fullDate, date);
 

@@ -22,7 +22,7 @@ const NewBank = () => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger className="flex cursor-pointer flex-col items-center gap-1">
-        <span className="bg-background flex size-10 items-center justify-center rounded-2xl shadow-sm">
+        <span className="bg-background dark:border-border/10 flex size-10 items-center justify-center rounded-2xl shadow-sm dark:border">
           <BankIcon size={16} />
         </span>
         <span className="text-sm font-medium">Banco</span>
