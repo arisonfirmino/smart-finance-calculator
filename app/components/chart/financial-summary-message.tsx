@@ -9,7 +9,7 @@ interface FinancialSummaryMessageProps {
 }
 
 const FinancialSummaryMessage = ({ user }: FinancialSummaryMessageProps) => {
-  const totalIncome = Number(user.total_incomes);
+  const totalIncome = Number(user.total_income);
   const totalExpense = Number(user.total_expenses);
 
   let summaryMessage = "";
