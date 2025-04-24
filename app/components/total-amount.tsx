@@ -5,12 +5,12 @@ import { formatCurrency } from "@/app/helpers/formatCurrency";
 import { User } from "@prisma/client";
 
 interface TotalAmountProps {
-  user: Pick<User, "total_incomes" | "total_expenses">;
+  user: Pick<User, "total_income" | "total_expenses">;
 }
 
 const TotalAmount = ({ user }: TotalAmountProps) => {
   const totals = [
-    { type: "income", amount: Number(user.total_incomes) },
+    { type: "income", amount: Number(user.total_income) },
     { type: "expense", amount: Number(user.total_expenses) },
   ];
 

@@ -58,7 +58,7 @@ export const addTransaction = async ({
     data: {
       balance:
         type === "income" ? { increment: amount } : { decrement: amount },
-      total_incomes: type === "income" ? { increment: amount } : undefined,
+      total_income: type === "income" ? { increment: amount } : undefined,
       total_expenses: type === "expense" ? { increment: amount } : undefined,
     },
   });
@@ -115,7 +115,7 @@ export const deleteTransaction = async ({
         transaction.type === "income"
           ? { decrement: transaction.amount }
           : { increment: transaction.amount },
-      total_incomes:
+      total_income:
         transaction.type === "income"
           ? { decrement: transaction.amount }
           : undefined,

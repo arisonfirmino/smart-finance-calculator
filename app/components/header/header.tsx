@@ -46,7 +46,7 @@ const Header = ({ user }: HeaderProps) => {
 
           <Separator />
 
-          <LateralMenu />
+          <LateralMenu user={user} />
         </SheetContent>
       </Sheet>
     </header>
