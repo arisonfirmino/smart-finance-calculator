@@ -23,12 +23,10 @@ const LateralMenu = ({ user }: LateralMenuProps) => {
 
       <Separator />
 
-      {user.banks.length > 0 && (
-        <div className="flex flex-col gap-3 p-5">
-          <h4 className="text-foreground/50 text-xs font-medium">Conexões</h4>
-          <BankManager banks={user.banks} />
-        </div>
-      )}
+      <div className="flex flex-col gap-3 p-5">
+        <h4 className="text-foreground/50 text-xs font-medium">Conexões</h4>
+        <BankManager banks={user.banks} />
+      </div>
 
       <Separator />
 

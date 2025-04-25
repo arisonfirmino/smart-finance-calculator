@@ -27,20 +27,22 @@ const NewBank = () => {
         </span>
         <span className="text-sm font-medium">Banco</span>
       </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Adicionar novo banco</DrawerTitle>
-          <DrawerDescription>
-            Preencha as informações abaixo para cadastrar um novo banco à sua
-            conta.
-          </DrawerDescription>
-        </DrawerHeader>
+      <DrawerContent className="items-center">
+        <div className="md:max-w-md">
+          <DrawerHeader>
+            <DrawerTitle>Adicionar novo banco</DrawerTitle>
+            <DrawerDescription>
+              Preencha as informações abaixo para cadastrar um novo banco à sua
+              conta.
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <BankForm onSuccess={() => setOpen(false)} />
+          <BankForm onSuccess={() => setOpen(false)} />
 
-        <DrawerFooter>
-          <DrawerClose>Cancelar</DrawerClose>
-        </DrawerFooter>
+          <DrawerFooter>
+            <DrawerClose>Cancelar</DrawerClose>
+          </DrawerFooter>
+        </div>
       </DrawerContent>
     </Drawer>
   );

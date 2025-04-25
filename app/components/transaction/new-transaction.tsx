@@ -25,26 +25,28 @@ interface NewTransactionProps {
 const NewTransaction = ({ user, type, open, setOpen }: NewTransactionProps) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>
-            Adicionar nova {type === "income" ? "receita" : "despesa"}
-          </DrawerTitle>
-          <DrawerDescription>
-            Preencha as informações abaixo para cadastrar uma nova{" "}
-            {type === "income" ? "receita" : "despesa"} à sua conta.
-          </DrawerDescription>
-        </DrawerHeader>
+      <DrawerContent className="items-center">
+        <div className="md:max-w-md">
+          <DrawerHeader>
+            <DrawerTitle>
+              Adicionar nova {type === "income" ? "receita" : "despesa"}
+            </DrawerTitle>
+            <DrawerDescription>
+              Preencha as informações abaixo para cadastrar uma nova{" "}
+              {type === "income" ? "receita" : "despesa"} à sua conta.
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <TransactionForm
-          banks={user.banks}
-          type={type}
-          onSuccess={() => setOpen(false)}
-        />
+          <TransactionForm
+            banks={user.banks}
+            type={type}
+            onSuccess={() => setOpen(false)}
+          />
 
-        <DrawerFooter>
-          <DrawerClose>Cancelar</DrawerClose>
-        </DrawerFooter>
+          <DrawerFooter>
+            <DrawerClose>Cancelar</DrawerClose>
+          </DrawerFooter>
+        </div>
       </DrawerContent>
     </Drawer>
   );

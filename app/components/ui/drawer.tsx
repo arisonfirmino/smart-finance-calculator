@@ -31,7 +31,10 @@ function DrawerClose({
     <DrawerPrimitive.Close
       data-slot="drawer-close"
       className={cn(
-        buttonVariants({ variant: "outline", className: "rounded-sm" }),
+        buttonVariants({
+          variant: "outline",
+          className: "rounded-sm",
+        }),
       )}
       {...props}
     />
@@ -74,7 +77,7 @@ function DrawerContent({
         )}
         {...props}
       >
-        <div className="bg-accent/20 mx-auto mt-4 hidden h-1.5 w-20 shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+        <div className="bg-accent/20 mx-auto mt-4 hidden h-1.5 w-20 shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block dark:bg-white/30" />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>

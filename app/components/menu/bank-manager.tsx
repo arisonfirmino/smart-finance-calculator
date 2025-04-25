@@ -16,7 +16,7 @@ const BankManager = ({ banks }: BankManagerProps) => {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
-        <AccordionTrigger>
+        <AccordionTrigger disabled={banks.length === 0}>
           <div className="flex flex-col">
             Gerenciar contas
             <span className="text-foreground/50 text-xs font-normal">

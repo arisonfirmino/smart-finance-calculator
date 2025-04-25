@@ -97,13 +97,15 @@ const TransactionForm = ({ banks, type, onSuccess }: TransactionFormProps) => {
 
       <BankPicker banks={banks} onSelect={setBank} />
 
-      <Input
-        placeholder="Título"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div className="flex flex-col gap-5 md:flex-row">
+        <Input
+          placeholder="Título"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-      <CurrencyInput value={amount} onChange={onChange} />
+        <CurrencyInput value={amount} onChange={onChange} />
+      </div>
 
       {error && (
         <small className="animate-fade-right animate-duration-300 text-xs text-red-600">
