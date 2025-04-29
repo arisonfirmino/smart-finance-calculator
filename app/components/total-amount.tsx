@@ -15,14 +15,14 @@ const TotalAmount = ({ user }: TotalAmountProps) => {
   ];
 
   return (
-    <div className="flex gap-5 p-5">
+    <div className="flex w-full gap-5 px-5 pt-5 md:w-fit md:gap-10 md:p-0">
       {totals.map((total) => (
         <div
           key={total.type}
-          className="border-border/30 dark:border-border/10 flex w-full items-center gap-2.5 rounded-2xl border p-2.5 shadow-sm"
+          className="border-border/30 flex w-full items-center gap-2.5 rounded-2xl border p-2.5 shadow md:rounded-none md:border-none md:p-0 md:shadow-none"
         >
           <span
-            className={`flex size-10 items-center justify-center rounded-2xl ${total.type === "income" ? "bg-green-500/30 text-green-500 dark:bg-green-300/15 dark:text-green-300" : "bg-red-600/30 text-red-600 dark:bg-red-400/15 dark:text-red-400"}`}
+            className={`flex size-10 items-center justify-center rounded-2xl ${total.type === "income" ? "bg-green-500/15 text-green-500 dark:bg-green-300/15 dark:text-green-300" : "bg-red-600/15 text-red-600 dark:bg-red-400/15 dark:text-red-400"}`}
           >
             {total.type === "income" ? (
               <MoneyReceive01Icon size={16} />

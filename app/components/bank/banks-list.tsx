@@ -8,7 +8,7 @@ interface BanksListProps {
 
 const BanksList = ({ banks }: BanksListProps) => {
   return (
-    <ul className="flex items-center gap-2.5 overflow-x-scroll px-5 [&::-webkit-scrollbar]:hidden">
+    <ul className="flex items-center gap-2.5 overflow-x-scroll px-5 md:px-0 [&::-webkit-scrollbar]:hidden">
       {banks.map((bank) => (
         <li key={bank.id}>
           <BankItem bank={bank} />

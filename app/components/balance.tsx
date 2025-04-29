@@ -5,11 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
+import BanksList from "@/app/components/bank/banks-list";
 
 import { formatCurrency } from "@/app/helpers/formatCurrency";
 
 import { Prisma } from "@prisma/client";
-import BanksList from "./bank/banks-list";
 
 interface BalanceProps {
   user: Prisma.UserGetPayload<{
@@ -21,23 +21,22 @@ interface BalanceProps {
 
 const Balance = ({ user }: BalanceProps) => {
   return (
-    <Card
-      className="h-52 w-full max-w-[280px] justify-between rounded-l-3xl bg-[url('/bg-card.png')] bg-cover text-white"
-      style={{ boxShadow: "30px 10px 10px rgba(0, 0, 0, 0.20)" }}
-    >
-      <CardHeader className="px-5 pt-5">
-        <CardTitle className="text-xs text-white/60 lowercase">
+    <Card className="text-primary-foreground md:text-foreground h-52 w-full max-w-[280px] justify-between gap-2.5 rounded-l-3xl bg-[url('/bg-card.png')] bg-cover shadow-xl md:h-fit md:max-w-full md:justify-normal md:bg-none md:shadow-none">
+      <CardHeader className="px-5 pt-5 md:p-0">
+        <CardTitle className="md:text-foreground/50 text-primary-foreground/50 text-xs lowercase">
           Saldo disponível
         </CardTitle>
         <p className="text-2xl font-bold">
           {formatCurrency(Number(user.balance))}
         </p>
       </CardHeader>
-      <CardFooter className="flex flex-col gap-1.5 pb-5">
-        <CardDescription className="ml-5 text-xs text-white/60">
+
+      <CardFooter className="space-y-1.5 pb-5 md:p-0">
+        <CardDescription className="ml-5 text-xs md:ml-0">
           {user.banks.length}{" "}
           {user.banks.length === 1 ? "conta conectada" : "contas conectadas"}
         </CardDescription>
+
         <BanksList banks={user.banks} />
       </CardFooter>
     </Card>

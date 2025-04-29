@@ -15,7 +15,8 @@ import {
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
 
-import { EllipsisIcon, LoaderCircleIcon } from "lucide-react";
+import { Delete02Icon } from "hugeicons-react";
+import { LoaderCircleIcon } from "lucide-react";
 
 import { deleteTransaction } from "@/app/actions/transaction";
 
@@ -47,12 +48,12 @@ const DeleteTransaction = ({ transaction }: DeleteTransactionProps) => {
     <AlertDialog>
       <AlertDialogTrigger
         disabled={isLoading}
-        className="text-foreground/50 hover:text-foreground absolute top-5 right-5 cursor-pointer"
+        className="hover:text-foreground absolute top-5 right-5 cursor-pointer text-red-600 dark:text-red-400"
       >
         {isLoading ? (
-          <LoaderCircleIcon size={14} />
+          <LoaderCircleIcon size={14} className="animate-spin" />
         ) : (
-          <EllipsisIcon size={14} />
+          <Delete02Icon size={14} />
         )}
       </AlertDialogTrigger>
       <AlertDialogContent>

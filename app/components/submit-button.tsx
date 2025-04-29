@@ -6,7 +6,12 @@ interface SubmitButtonProps {
 
 const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
   return (
-    <Button type="submit" disabled={isLoading} className="w-full rounded-sm">
+    <Button
+      type="submit"
+      variant="submit"
+      disabled={isLoading}
+      className="w-full"
+    >
       {isLoading ? "Carregando" : "Adicionar"}
     </Button>
   );

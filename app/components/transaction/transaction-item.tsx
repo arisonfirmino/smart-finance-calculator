@@ -26,7 +26,7 @@ interface TransactionItemProps {
 const TransactionItem = ({ transaction, isLast }: TransactionItemProps) => {
   return (
     <Card
-      className={`border-border/5 relative flex-row items-center gap-2.5 p-5 ${isLast ? "" : "border-b"}`}
+      className={`border-border/5 md:border-border/15 relative flex-row items-center gap-2.5 p-5 md:px-0 ${isLast ? "md:border-b" : "border-b"}`}
     >
       <span
         className={`flex size-9 items-center justify-center rounded-2xl ${transaction.type === "income" ? "bg-green-500/15 text-green-500 dark:bg-green-300/15 dark:text-green-300" : "bg-red-600/15 text-red-600 dark:bg-red-400/15 dark:text-red-400"}`}

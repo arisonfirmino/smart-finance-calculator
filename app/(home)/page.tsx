@@ -5,14 +5,15 @@ import { getUser } from "@/app/helpers/getUser";
 
 import Header from "@/app/components/header/header";
 import { Separator } from "@/app/components/ui/separator";
-import ButtonsPanel from "@/app/components/buttons-panel";
-import Balance from "@/app/components/balance";
+import LateralMenu from "@/app/components/menu/lateral-menu";
 import Container from "@/app/components/container";
+import ButtonsPanelMobile from "@/app/(home)/components/mobile/buttons-panel-mobile";
+import Balance from "@/app/components/balance";
 import TotalAmount from "@/app/components/total-amount";
+import ButtonsPanelDesktop from "@/app/(home)/components/desktop/buttons-panel-desktop";
 import Search from "@/app/components/search";
 import FinancialChart from "@/app/components/chart/financial-chart";
 import TransactionsList from "@/app/components/transaction/transactions-list";
-import LateralMenu from "@/app/components/menu/lateral-menu";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -24,53 +25,43 @@ const Home = async () => {
   if (!user) return null;
 
   return (
-    <main className="flex min-h-screen flex-col md:flex-row md:justify-center">
-      <div className="md:hidden">
-        <Header user={user} />
+    <main className="flex flex-col md:flex-row">
+      <Header user={user} />
+
+      <div className="border-border/10 hidden w-full max-w-xs flex-col border-r xl:flex">
+        <p className="p-5 text-center text-sm font-semibold uppercase">
+          Configurações
+        </p>
+        <Separator />
+        <LateralMenu user={user} />
       </div>
 
-      <Separator
-        orientation="vertical"
-        className="hidden min-h-screen min-w-1 md:block"
-      />
-
       <Container>
-        <div className="bg-muted flex items-center justify-between gap-5 py-5">
-          <ButtonsPanel user={user} />
+        <div className="flex items-center justify-between pt-5 md:pt-0">
+          <ButtonsPanelMobile user={user} />
           <Balance user={user} />
         </div>
 
-        <div className="bg-background flex-1 rounded-t-3xl">
-          <TotalAmount user={user} />
+        <Separator className="bg-accent/5 hidden md:flex" />
 
-          <div className="flex gap-5 px-5">
+        <div className="bg-background flex-1 gap-5 rounded-t-3xl md:flex md:flex-col md:rounded-t-none md:bg-transparent">
+          <div className="flex justify-between">
+            <TotalAmount user={user} />
+            <ButtonsPanelDesktop user={user} />
+          </div>
+
+          <Separator className="bg-accent/5 hidden md:flex" />
+
+          <div className="flex gap-5">
             <Search />
             <FinancialChart user={user} />
           </div>
 
-          {user.transactions.length > 0 ? (
+          {user.transactions.length > 0 && (
             <TransactionsList transactions={user.transactions} />
-          ) : (
-            <p className="text-foreground/50 text-center text-sm">
-              Seu histórico está vazio por enquanto.
-            </p>
           )}
         </div>
       </Container>
-
-      <Separator
-        orientation="vertical"
-        className="hidden min-h-screen min-w-1 md:block"
-      />
-
-      <div className="hidden max-w-80 md:block md:min-w-80">
-        <LateralMenu user={user} />
-      </div>
-
-      <Separator
-        orientation="vertical"
-        className="hidden min-h-screen min-w-1 md:block"
-      />
     </main>
   );
 };

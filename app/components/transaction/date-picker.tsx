@@ -45,7 +45,9 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
           onClick={() => setWeekStart((prev) => subWeeks(prev, 1))}
         />
 
-        <p className="text-xs uppercase">{formatDate(date)}</p>
+        <p className="text-foreground text-xs font-medium uppercase">
+          {formatDate(date)}
+        </p>
 
         <WeekNavButton
           direction="next"
@@ -62,7 +64,7 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
               key={day.label}
               type="button"
               size="icon"
-              variant={isSelected ? "default" : "ghost"}
+              variant={isSelected ? "submit" : "ghost"}
               className="flex size-12 flex-col gap-0"
               onClick={() => setDate(day.fullDate)}
             >

@@ -1,7 +1,9 @@
 const Container = ({ children }: { children: React.ReactNode }) => {
   return (
-    <section className="bg-muted flex flex-col overflow-hidden rounded-t-3xl md:max-w-96 md:min-w-96 md:rounded-none">
-      {children}
+    <section className="bg-muted overflox-y-scroll relative flex w-full justify-center rounded-t-3xl md:h-screen md:rounded-t-none">
+      <div className="flex w-full flex-col gap-5 md:max-w-2xl md:pt-28">
+        {children}
+      </div>
     </section>
   );
 };
