@@ -37,7 +37,7 @@ const Balance = ({ user }: BalanceProps) => {
           {user.banks.length === 1 ? "conta conectada" : "contas conectadas"}
         </CardDescription>
 
-        <BanksList banks={user.banks} />
+        {user.banks.length > 0 && <BanksList banks={user.banks} />}
       </CardFooter>
     </Card>
   );

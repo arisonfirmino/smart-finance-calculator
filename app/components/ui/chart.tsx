@@ -5,11 +5,7 @@ import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/app/lib/utils";
 import { formatCurrency } from "@/app/helpers/formatCurrency";
-import {
-  CalendarDaysIcon,
-  TrendingDownIcon,
-  TrendingUpIcon,
-} from "lucide-react";
+import { TradeDownIcon, TradeUpIcon } from "hugeicons-react";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -185,8 +181,14 @@ function ChartTooltipContent({
     >
       {!nestLabel ? (
         <div className="flex items-center justify-between p-2">
-          <p className="capitalize">{tooltipLabel}</p>
-          <CalendarDaysIcon size={12} />
+          <span
+            className={`size-3 rounded ${payload.map((item) => (item.name === "income" ? "bg-green-500 dark:bg-green-300" : "bg-red-600 dark:bg-red-400"))}`}
+          />
+          {payload.map((item) => (
+            <p key={item.name} className="font-medium">
+              {item.name === "income" ? "Receitas" : "Despesas"}
+            </p>
+          ))}
         </div>
       ) : null}
       <div>
@@ -211,13 +213,11 @@ function ChartTooltipContent({
                     <itemConfig.icon />
                   ) : (
                     !hideIndicator && (
-                      <div
-                        className={`flex size-4 items-center justify-center rounded-sm border ${item.dataKey === "income" ? "border-green-500/30 bg-green-500/20" : "border-red-600/30 bg-red-600/20"}`}
-                      >
-                        {item.dataKey === "income" ? (
-                          <TrendingUpIcon size={10} color={indicatorColor} />
+                      <div className="[&_svg:not([class*='size-'])]:size-4">
+                        {item.name === "income" ? (
+                          <TradeUpIcon color={indicatorColor} />
                         ) : (
-                          <TrendingDownIcon size={10} color={indicatorColor} />
+                          <TradeDownIcon color={indicatorColor} />
                         )}
                       </div>
                     )

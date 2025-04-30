@@ -48,7 +48,7 @@ const DeleteTransaction = ({ transaction }: DeleteTransactionProps) => {
     <AlertDialog>
       <AlertDialogTrigger
         disabled={isLoading}
-        className="hover:text-foreground absolute top-5 right-5 cursor-pointer text-red-600 dark:text-red-400"
+        className="hover:text-foreground absolute top-5 right-2.5 cursor-pointer text-red-600 dark:text-red-400"
       >
         {isLoading ? (
           <LoaderCircleIcon size={14} className="animate-spin" />

@@ -15,7 +15,7 @@ const TotalAmount = ({ user }: TotalAmountProps) => {
   ];
 
   return (
-    <div className="flex w-full gap-5 px-5 pt-5 md:w-fit md:gap-10 md:p-0">
+    <div className="flex w-full gap-5 md:w-fit md:gap-10">
       {totals.map((total) => (
         <div
           key={total.type}

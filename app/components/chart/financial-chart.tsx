@@ -1,27 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { Pie, PieChart, Sector } from "recharts";
+import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
+import { Separator } from "@/app/components/ui/separator";
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/app/components/ui/drawer";
-import { Button, buttonVariants } from "@/app/components/ui/button";
-import Chart from "@/app/components/chart/chart";
-import FinancialSummaryMessage from "@/app/components/chart/financial-summary-message";
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/app/components/ui/chart";
 
-import { RefreshCcwIcon } from "lucide-react";
-
-import { formatRange } from "@/app/helpers/formatRange";
+import { formatDate, formatPeriod } from "@/app/helpers/formatDate";
 
 import { Prisma } from "@prisma/client";
-import { cn } from "@/app/lib/utils";
-import { Analytics01Icon } from "hugeicons-react";
 
 interface FinancialChartProps {
   user: Prisma.UserGetPayload<{
@@ -32,50 +32,109 @@ interface FinancialChartProps {
 }
 
 const FinancialChart = ({ user }: FinancialChartProps) => {
-  const [select, setSelect] = useState<"1st" | "2st">("1st");
+  const income = Number(user.total_income);
+  const expenses = Number(user.total_expenses);
+  const transactions = user.transactions;
+
+  const dates = transactions
+    .map((transaction) => new Date(transaction.date))
+    .sort((a, b) => a.getTime() - b.getTime());
+
+  const chartData = [
+    {
+      label: "income",
+      amount: income,
+      fill: "var(--chart-1)",
+    },
+    {
+      label: "expense",
+      amount: expenses,
+      fill: "var(--chart-2)",
+    },
+  ];
+
+  const chartConfig = {
+    income: {
+      label: "Receitas",
+      color: "hsl(var(--chart-1))",
+    },
+    expenses: {
+      label: "Despesas",
+      color: "hsl(var(--chart-2))",
+    },
+  } satisfies ChartConfig;
 
   return (
-    <Drawer>
-      <DrawerTrigger
-        className={cn(
-          buttonVariants({
-            variant: "outline",
-            className: "dark:border-border/10 size-8 rounded-xl",
-          }),
-        )}
-      >
-        <Analytics01Icon />
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="flex-row items-center justify-between p-5 pb-2.5 text-start">
-          <div>
-            <DrawerTitle className="text-sm">
-              Visão Financeira Mensal
-            </DrawerTitle>
-            <DrawerDescription className="text-xs">
-              {select === "1st" ? "Janeiro - Junho" : "Julho - Dezembro"}
-            </DrawerDescription>
-          </div>
+    <>
+      <Separator className="hidden md:flex" />
 
-          <Button
-            onClick={() => setSelect(select === "1st" ? "2st" : "1st")}
-            variant="outline"
-            className="size-9 rounded-xl"
+      <Card className="flex w-full flex-col justify-between gap-5 md:aspect-square md:gap-0">
+        <CardHeader className="px-5 pt-5">
+          <CardTitle className="text-sm font-medium uppercase">
+            Resumo financeiro
+          </CardTitle>
+          <CardDescription className="text-foreground/50 text-xs uppercase">
+            {dates.length === 1
+              ? formatDate(dates[0])
+              : `${formatDate(dates[0])} - ${formatDate(dates[dates.length - 1])}`}
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-60"
           >
-            <RefreshCcwIcon />
-          </Button>
-        </DrawerHeader>
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="amount"
+                nameKey="label"
+                innerRadius={60}
+                activeIndex={0}
+                activeShape={({
+                  outerRadius = 0,
+                  ...props
+                }: PieSectorDataItem) => (
+                  <Sector {...props} outerRadius={outerRadius + 10} />
+                )}
+              />
+            </PieChart>
+          </ChartContainer>
+        </CardContent>
 
-        <Chart transactions={user.transactions} select={select} />
-
-        <DrawerFooter>
-          <p className="text-foreground/50 text-xs lowercase">
-            {formatRange(user.transactions)}
+        <CardFooter className="px-5 pb-5 md:pb-2.5">
+          <p className="text-sm font-medium">
+            Período {dates.length > 1 ? `de ${formatPeriod(dates)}` : "único"}
           </p>
-          <FinancialSummaryMessage user={user} />
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+
+          {income > 0 && expenses === 0 && (
+            <p className="text-foreground/50 text-xs">
+              Apenas receitas neste período.
+            </p>
+          )}
+
+          {income === 0 && expenses > 0 && (
+            <p className="text-foreground/50 text-xs">
+              Apenas despesas neste período.
+            </p>
+          )}
+
+          {income > 0 && expenses > 0 && (
+            <p className="text-foreground/50 text-xs">
+              {income < expenses
+                ? `Gastos em ${(((expenses - income) / income) * 100).toFixed()}% a mais`
+                : `Ganhos em ${(((income - expenses) / income) * 100).toFixed()}% a mais`}{" "}
+              neste período.
+            </p>
+          )}
+        </CardFooter>
+      </Card>
+    </>
   );
 };
 

@@ -24,9 +24,7 @@ const TransactionsList = ({ transactions }: TransactionsProps) => {
 
   return Object.entries(filteredTransactions).map(([date, transactions]) => (
     <div key={date} className="border-border/15 border-b md:border-none">
-      <h3 className="px-5 pt-5 text-xs font-medium uppercase md:px-0">
-        {date}
-      </h3>
+      <h3 className="text-xs font-medium uppercase">{date}</h3>
 
       <ul className="grid-cols-2 gap-x-5 md:grid">
         {transactions.map((transaction, index) => (
