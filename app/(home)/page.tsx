@@ -11,10 +11,8 @@ import ButtonsPanelMobile from "@/app/(home)/components/mobile/buttons-panel-mob
 import Balance from "@/app/components/balance";
 import TotalAmount from "@/app/components/total-amount";
 import ButtonsPanelDesktop from "@/app/(home)/components/desktop/buttons-panel-desktop";
-import Search from "@/app/components/search";
-import FinancialChartDrawerMobile from "@/app/(home)/components/mobile/financial-chart-drawer-mobile";
 import FinancialChart from "@/app/components/chart/financial-chart";
-import TransactionsList from "@/app/components/transaction/transactions-list";
+import TransactionsSection from "@/app/(home)/components/transactions-section";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -25,6 +23,8 @@ const Home = async () => {
 
   if (!user) return null;
 
+  const hasTransactions = user.transactions.length > 0;
+
   return (
     <main className="flex flex-col md:flex-row">
       <Header user={user} />
@@ -33,8 +33,11 @@ const Home = async () => {
         <p className="p-5 text-center text-sm font-semibold uppercase">
           Configurações
         </p>
-        {user.transactions.length > 0 && <FinancialChart user={user} />}
+
+        {hasTransactions && <FinancialChart user={user} />}
+
         <Separator />
+
         <LateralMenu user={user} />
       </div>
 
@@ -54,28 +57,7 @@ const Home = async () => {
 
           <Separator className="bg-accent/5 hidden md:flex" />
 
-          <div className="flex gap-5">
-            <Search />
-            {user.transactions.length > 0 && (
-              <FinancialChartDrawerMobile user={user} />
-            )}
-          </div>
-
-          {user.transactions.length > 0 ? (
-            <TransactionsList transactions={user.transactions} />
-          ) : (
-            <p className="text-foreground/50 px-5 text-center text-sm md:px-0 md:text-start">
-              {user.banks.length > 0
-                ? "Controle suas finanças com facilidade."
-                : "Você ainda não cadastrou um banco."}
-              <br />
-              <span className="text-xs">
-                {user.banks.length > 0
-                  ? "Adicione uma nova receita ou despesa e acompanhe de perto o seu saldo."
-                  : "Para começar a registrar suas transações e controlar suas finanças, cadastre um banco agora mesmo."}
-              </span>
-            </p>
-          )}
+          <TransactionsSection user={user} hasTransactions={hasTransactions} />
         </div>
       </Container>
     </main>
