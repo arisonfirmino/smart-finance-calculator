@@ -13,6 +13,7 @@ import TotalAmount from "@/app/components/total-amount";
 import ButtonsPanelDesktop from "@/app/(home)/components/desktop/buttons-panel-desktop";
 import FinancialChart from "@/app/components/chart/financial-chart";
 import TransactionsSection from "@/app/(home)/components/transactions-section";
+import UserAvatar from "../components/user-avatar";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -26,8 +27,8 @@ const Home = async () => {
   const hasTransactions = user.transactions.length > 0;
 
   return (
-    <main className="flex flex-col md:flex-row">
-      <Header user={user} />
+    <main className="flex flex-col xl:flex-row">
+      <Header user={user} hasTransactions={hasTransactions} />
 
       <div className="border-border/10 hidden h-screen w-full max-w-xs flex-col overflow-y-scroll border-r xl:flex [&::-webkit-scrollbar]:hidden">
         <p className="p-5 text-center text-sm font-semibold uppercase">
@@ -42,6 +43,10 @@ const Home = async () => {
       </div>
 
       <Container>
+        <div className="fixed top-5 right-5 hidden xl:flex">
+          <UserAvatar user={user} />
+        </div>
+
         <div className="flex items-center justify-between pt-5 md:pt-0">
           <ButtonsPanelMobile user={user} />
           <Balance user={user} />
