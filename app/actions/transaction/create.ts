@@ -77,6 +77,25 @@ export const createTransaction = async ({
     };
   }
 
+  if (type === "expense") {
+    if (Number(bank.current_value) === 0) {
+      return {
+        success: false,
+        type: "validation_error",
+        error:
+          "O saldo do banco é insuficiente. Não é possível adicionar uma despesa.",
+      };
+    }
+
+    if (amount > Number(bank.current_value)) {
+      return {
+        success: false,
+        type: "validation_error",
+        error: "Saldo insuficiente para essa despesa.",
+      };
+    }
+  }
+
   await updateUserBalance(userId, type, amount, "apply");
   await updateBankBalance(bankId, type, amount, "apply");
 

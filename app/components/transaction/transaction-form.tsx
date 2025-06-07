@@ -55,7 +55,7 @@ const TransactionForm = ({ banks, type, onSuccess }: TransactionFormProps) => {
     event.preventDefault();
 
     if (!session) {
-      toast("Usuário não autenticado.");
+      toast.error("Usuário não autenticado.");
       return;
     }
 
@@ -67,27 +67,27 @@ const TransactionForm = ({ banks, type, onSuccess }: TransactionFormProps) => {
 
     setIsLoading(true);
 
-    await toast.promise(
-      createTransaction({
-        userId: session.user.id,
-        bankId: bank.id,
-        title,
-        type,
-        amount,
-        date,
-      }),
-      {
-        loading: `Adicionando ${type === "income" ? "receita" : "despesa"}...`,
-        success: `${type === "income" ? "Receita" : "Despesa"} adicionada com sucesso.`,
-        error: (err) =>
-          err?.error ||
-          `Erro ao adicionar ${type === "income" ? "receita" : "despesa"}`,
-      },
-    );
+    const result = await createTransaction({
+      userId: session.user.id,
+      bankId: bank.id,
+      title,
+      type,
+      amount,
+      date,
+    });
+
+    if (!result.success) {
+      setError(result.error);
+      setIsLoading(false);
+      return;
+    }
 
     onSuccess();
     resetForm();
     setIsLoading(false);
+    toast(
+      `${type === "income" ? "Receita" : "Despesa"} adicionada com sucesso.`,
+    );
   };
 
   return (

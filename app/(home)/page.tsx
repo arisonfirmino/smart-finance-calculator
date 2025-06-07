@@ -13,7 +13,8 @@ import TotalAmount from "@/app/components/total-amount";
 import ButtonsPanelDesktop from "@/app/(home)/components/desktop/buttons-panel-desktop";
 import FinancialChart from "@/app/components/chart/financial-chart";
 import TransactionsSection from "@/app/(home)/components/transactions-section";
-import UserAvatar from "../components/user-avatar";
+import UserAvatar from "@/app/components/user-avatar";
+import NegativeBalanceAlert from "@/app/components/negative-balance-alert";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -64,6 +65,8 @@ const Home = async () => {
 
           <TransactionsSection user={user} hasTransactions={hasTransactions} />
         </div>
+
+        {user.balance < 0 && <NegativeBalanceAlert />}
       </Container>
     </main>
   );
