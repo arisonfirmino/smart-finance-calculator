@@ -4,6 +4,7 @@ import "./globals.css";
 
 import AuthProvider from "@/app/providers/auth";
 import ThemeProvider from "@/app/providers/theme";
+import { Toaster } from "@/app/components/ui/sonner";
 
 const poppinsFont = Poppins({
   subsets: ["latin"],
@@ -24,7 +25,10 @@ export default function RootLayout({
     <html lang="pt-br" suppressHydrationWarning>
       <body className={`${poppinsFont.className} antialiased`}>
         <AuthProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <Toaster position="top-center" />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

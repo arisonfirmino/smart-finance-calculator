@@ -9,7 +9,9 @@ import BankPicker from "@/app/components/bank/bank-picker";
 import CurrencyInput from "@/app/components/currency-input";
 import SubmitButton from "@/app/components/submit-button";
 
-import { addBank } from "@/app/actions/bank";
+import { createBank } from "@/app/actions/bank/create";
+
+import { toast } from "sonner";
 
 interface BankFormProps {
   onSuccess: () => void;
@@ -20,48 +22,60 @@ const BankForm = ({ onSuccess }: BankFormProps) => {
   const [amount, setAmount] = useState<number>(0);
 
   const [error, setError] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: session } = useSession();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(event.target.value);
+    if (!isNaN(value)) setAmount(value);
+  };
 
-    if (!isNaN(value)) {
-      setAmount(value);
-    }
+  const validateForm = () => {
+    if (!bank) return "Selecione um banco.";
+    return "";
+  };
+
+  const resetForm = () => {
+    setBank(null);
+    setAmount(0);
+    setError("");
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!session) return;
+    if (!session) {
+      toast("Usuário não autenticado.");
+      return;
+    }
 
-    if (!bank) {
-      setError("Por favor, selecione um banco.");
+    const errorMessage = validateForm();
+    if (errorMessage) {
+      setError(errorMessage);
       return;
     }
 
     setIsLoading(true);
 
-    const response = await addBank({
-      userId: session.user.id,
-      name: bank.name,
-      icon: bank.icon,
-      initial_value: amount ? amount : undefined,
-    });
+    await toast.promise(
+      createBank({
+        userId: session.user.id,
+        name: bank.name,
+        icon: bank.icon,
+        amount,
+      }),
+      {
+        loading: "Adicionando banco...",
+        success: "Banco adicionado com sucesso.",
+        error: (err) => err?.error || "Erro ao adicionar banco.",
+      },
+    );
 
-    if (response?.error) {
-      setError(response.error);
-      setIsLoading(false);
-      return;
-    }
-
-    setBank(null);
-    setAmount(0);
-    setError("");
-    setIsLoading(false);
     onSuccess();
+    resetForm();
+    setIsLoading(false);
   };
 
   return (
@@ -71,9 +85,9 @@ const BankForm = ({ onSuccess }: BankFormProps) => {
       <CurrencyInput value={amount} onChange={onChange} />
 
       {error && (
-        <small className="animate-fade-right animate-duration-300 text-xs text-red-600">
+        <p className="animate-fade-right animate-duration-300 text-xs text-red-600">
           {error}
-        </small>
+        </p>
       )}
 
       <SubmitButton isLoading={isLoading} />

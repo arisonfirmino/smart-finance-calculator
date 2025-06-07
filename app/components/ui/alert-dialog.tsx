@@ -54,7 +54,7 @@ function AlertDialogContent({
       <AlertDialogPrimitive.Content
         data-slot="alert-dialog-content"
         className={cn(
-          "bg-card dark:border-border/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 border-border/50 fixed top-[50%] left-[50%] z-50 grid w-full max-w-4/5 translate-x-[-50%] translate-y-[-50%] gap-4 rounded-2xl border p-5 shadow-xl duration-200 md:max-w-96",
+          "bg-card dark:border-border/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 border-border/50 fixed top-[50%] left-[50%] z-50 grid w-full max-w-4/5 translate-x-[-50%] translate-y-[-50%] gap-5 rounded-2xl border p-2.5 shadow-xl duration-200 md:max-w-xs",
           className,
         )}
         {...props}
@@ -70,7 +70,7 @@ function AlertDialogHeader({
   return (
     <div
       data-slot="alert-dialog-header"
-      className={cn("flex flex-col text-center", className)}
+      className={cn("flex flex-col gap-1 text-center", className)}
       {...props}
     />
   );
@@ -122,7 +122,10 @@ function AlertDialogAction({
   return (
     <AlertDialogPrimitive.Action
       className={cn(
-        buttonVariants({ className: "bg-red-600 hover:bg-red-600/90" }),
+        buttonVariants({
+          variant: "destructive",
+          size: "sm",
+        }),
         className,
       )}
       {...props}
@@ -136,7 +139,10 @@ function AlertDialogCancel({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
   return (
     <AlertDialogPrimitive.Cancel
-      className={cn(buttonVariants({ variant: "outline" }), className)}
+      className={cn(
+        buttonVariants({ variant: "outline", size: "sm" }),
+        className,
+      )}
       {...props}
     />
   );

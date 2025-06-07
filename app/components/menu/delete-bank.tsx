@@ -15,9 +15,11 @@ import {
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
 
-import { Delete02Icon, RefreshIcon } from "hugeicons-react";
+import { LoaderIcon, Trash2Icon } from "lucide-react";
 
-import { deleteBank } from "@/app/actions/bank";
+import { deleteBank } from "@/app/actions/bank/delete";
+
+import { toast } from "sonner";
 
 const DeleteBank = ({ bankId }: { bankId: string }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,11 +27,18 @@ const DeleteBank = ({ bankId }: { bankId: string }) => {
   const { data: session } = useSession();
 
   const handleDelete = async () => {
-    if (!session) return;
+    if (!session) {
+      toast("Usuário não autenticado.");
+      return;
+    }
 
     setIsLoading(true);
 
-    await deleteBank({ userId: session.user.id, bankId });
+    await toast.promise(deleteBank({ userId: session.user.id, bankId }), {
+      loading: "Removendo banco...",
+      success: "Banco removido com sucesso.",
+      error: (err) => err?.error || "Erro ao remover o banco.",
+    });
 
     setIsLoading(false);
   };
@@ -38,24 +47,28 @@ const DeleteBank = ({ bankId }: { bankId: string }) => {
     <AlertDialog>
       <AlertDialogTrigger
         disabled={isLoading}
-        className="hover:text-foreground/50 active:text-foreground/50 cursor-pointer text-red-600"
+        className="hover:text-foreground/50 cursor-pointer text-red-600"
       >
         {isLoading ? (
-          <RefreshIcon size={12} className="animate-spin" />
+          <LoaderIcon size={12} className="animate-spin" />
         ) : (
-          <Delete02Icon size={12} />
+          <Trash2Icon size={12} />
         )}
       </AlertDialogTrigger>
+
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Excluir banco</AlertDialogTitle>
+
           <AlertDialogDescription>
-            Essa operação removerá definitivamente este banco e todas as
-            transações associados. Deseja prosseguir?
+            Esta ação não pode ser desfeita. Isso removerá permanentemente o
+            banco e todas as transações associadas.
           </AlertDialogDescription>
         </AlertDialogHeader>
+
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
+
           <AlertDialogAction onClick={handleDelete}>
             Continuar
           </AlertDialogAction>
