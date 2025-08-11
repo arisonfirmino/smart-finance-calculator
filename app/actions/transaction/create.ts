@@ -3,114 +3,87 @@
 import { db } from "@/app/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-import { updateUserBalance, updateBankBalance } from "@/app/actions/helpers";
-
-import { ActionResponse } from "@/app/types";
-
 interface CreateTransactionDTO {
-  userId: string;
+  userEmail: string;
   bankId: string;
+  type: string;
   title: string;
-  type: "income" | "expense";
   amount: number;
   date: Date;
 }
 
 export const createTransaction = async ({
-  userId,
+  userEmail,
   bankId,
-  title,
   type,
+  title,
   amount,
   date,
-}: CreateTransactionDTO): Promise<ActionResponse> => {
-  if (!userId) {
-    return {
-      success: false,
-      type: "unauthorized",
-      error: "Usuário não autenticado.",
-    };
-  }
+}: CreateTransactionDTO) => {
+  if (!userEmail) return { error: "E-mail do usuário não fornecido." };
 
-  if (!bankId) {
-    return {
-      success: false,
-      type: "validation_error",
-      error: "Banco não informado.",
-    };
-  }
+  const user = await db.user.findUnique({ where: { email: userEmail } });
+  if (!user) return { error: "Usuário não encontrado." };
 
-  const [user, bank] = await Promise.all([
-    db.user.findUnique({ where: { id: userId } }),
-    db.bank.findUnique({ where: { id: bankId }, include: { user: true } }),
-  ]);
+  if (!bankId) return { error: "ID do banco não fornecido." };
 
-  if (!user) {
-    return {
-      success: false,
-      type: "not_found",
-      error: "Usuário não encontrado.",
-    };
-  }
+  const bank = await db.bank.findUnique({
+    where: { id: bankId },
+    include: { user: true },
+  });
+  if (!bank) return { error: "Banco não encontrado" };
 
-  if (!bank) {
-    return {
-      success: false,
-      type: "not_found",
-      error: "Banco não encontrado.",
-    };
-  }
+  if (bank.user.id !== user.id)
+    return { error: "Banco não pertence ao usuário." };
 
-  if (bank.user.id !== userId) {
-    return {
-      success: false,
-      type: "unauthorized",
-      error: "Este banco não pertence ao usuário.",
-    };
-  }
+  if (!type) return { error: "Tipo de transação não fornecido." };
+  if (type !== "income" && type !== "expense")
+    return { error: "Tipo de transação inválido. Use 'income' ou 'expense'." };
 
-  if (!title || !type || !amount || !date) {
-    return {
-      success: false,
-      type: "validation_error",
-      error: "Preencha todos os campos obrigatórios.",
-    };
-  }
+  if (!title) return { error: "Título da transação não fornecido." };
 
-  if (type === "expense") {
-    if (Number(bank.current_value) === 0) {
-      return {
-        success: false,
-        type: "validation_error",
-        error:
-          "O saldo do banco é insuficiente. Não é possível adicionar uma despesa.",
-      };
-    }
+  if (!amount) return { error: "Valor da transação não fornecido." };
+  if (amount <= 0)
+    return { error: "O valor da transação deve ser maior que zero." };
 
-    if (amount > Number(bank.current_value)) {
-      return {
-        success: false,
-        type: "validation_error",
-        error: "Saldo insuficiente para essa despesa.",
-      };
-    }
-  }
+  if (!date) return { error: "Data da transação não fornecida." };
 
-  await updateUserBalance(userId, type, amount, "apply");
-  await updateBankBalance(bankId, type, amount, "apply");
+  if (type === "expense" && amount > Number(bank.current_balance))
+    return { error: "Saldo insuficiente para essa transação." };
 
   await db.transaction.create({
-    data: {
-      userId,
-      bankId,
-      title,
-      type,
-      amount,
-      date,
-    },
+    data: { userId: user.id, bankId, type, title, amount, date },
   });
 
-  revalidatePath("/");
+  if (type === "income") {
+    await db.user.update({
+      where: { email: userEmail },
+      data: {
+        balance: { increment: amount },
+        total_income: { increment: amount },
+        updated_at: new Date(),
+      },
+    });
 
-  return { success: true };
+    await db.bank.update({
+      where: { id: bankId },
+      data: { current_balance: { increment: amount }, updated_at: new Date() },
+    });
+  } else {
+    await db.user.update({
+      where: { email: userEmail },
+      data: {
+        balance: { decrement: amount },
+        total_expenses: { increment: amount },
+        updated_at: new Date(),
+      },
+    });
+
+    await db.bank.update({
+      where: { id: bankId },
+      data: { current_balance: { decrement: amount }, updated_at: new Date() },
+    });
+  }
+
+  revalidatePath("/");
 };

@@ -1,16 +1,15 @@
-import { Prisma } from "@prisma/client";
+import { Transaction } from "@/app/types";
 
-export interface TransactionsProps {
-  transactions: Prisma.TransactionGetPayload<{
-    include: { bank: true };
-  }>[];
-}
+export const sortTransactions = (transactions: Transaction[]) => {
+  return transactions.sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
 
-export const sortTransactions = ({ transactions }: TransactionsProps) => {
-  return [...transactions].sort((a, b) => {
-    const dateComparison =
-      new Date(b.date).getTime() - new Date(a.date).getTime();
-    if (dateComparison !== 0) return dateComparison;
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    if (dateA !== dateB) return dateB - dateA;
+
+    const createdA = new Date(a.created_at).getTime();
+    const createdB = new Date(b.created_at).getTime();
+
+    return createdB - createdA;
   });
 };

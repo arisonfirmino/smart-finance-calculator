@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "tailwindcss-animated";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 @theme inline {
   --color-background: var(--background);
@@ -18,32 +17,34 @@
   /* --color-chart-5: var(--chart-5); */
   /* --color-chart-4: var(--chart-4); */
   /* --color-chart-3: var(--chart-3); */
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  /* --color-chart-2: var(--chart-2); */
+  /* --color-chart-1: var(--chart-1); */
   /* --color-ring: var(--ring); */
-  --color-input: var(--input);
+  /* --color-input: var(--input); */
   --color-border: var(--border);
   --color-destructive: var(--destructive);
   /* --color-accent-foreground: var(--accent-foreground); */
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
+  /* --color-accent: var(--accent); */
+  /* --color-muted-foreground: var(--muted-foreground); */
   --color-muted: var(--muted);
   /* --color-secondary-foreground: var(--secondary-foreground); */
   /* --color-secondary: var(--secondary); */
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-income: var(--income);
+  --color-expense: var(--expense);
   /* --color-popover-foreground: var(--popover-foreground); */
   /* --color-popover: var(--popover); */
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  /* --color-card-foreground: var(--card-foreground); */
+  /* --color-card: var(--card); */
 }
 
 :root {
   --radius: 0.625rem;
   --background: #ffffff;
   --foreground: #000000;
-  --card: #ffffff;
-  --card-foreground: #000000;
+  /* --card: oklch(1 0 0); */
+  /* --card-foreground: oklch(0.129 0.042 264.695); */
   /* --popover: oklch(1 0 0); */
   /* --popover-foreground: oklch(0.129 0.042 264.695); */
   --primary: #3b82f6;
@@ -51,15 +52,17 @@
   /* --secondary: oklch(0.968 0.007 247.896); */
   /* --secondary-foreground: oklch(0.208 0.042 265.755); */
   --muted: #f3f3f3;
-  --muted-foreground: #000000;
-  --accent: #000000;
+  /* --muted-foreground: oklch(0.554 0.046 257.417); */
+  /* --accent: oklch(0.968 0.007 247.896); */
   /* --accent-foreground: oklch(0.208 0.042 265.755); */
-  --destructive: #e7000b;
-  --border: #000000;
-  --input: #000000;
+  --destructive: #dc2626;
+  --border: rgba(0, 0, 0, 0.1);
+  --income: #22c55e;
+  --expense: #dc2626;
+  /* --input: oklch(0.929 0.013 255.508); */
   /* --ring: oklch(0.704 0.04 256.788); */
-  --chart-1: #00c950;
-  --chart-2: #e7000b;
+  /* --chart-1: oklch(0.646 0.222 41.116); */
+  /* --chart-2: oklch(0.6 0.118 184.704); */
   /* --chart-3: oklch(0.398 0.07 227.392); */
   /* --chart-4: oklch(0.828 0.189 84.429); */
   /* --chart-5: oklch(0.769 0.188 70.08); */
@@ -73,40 +76,7 @@
   /* --sidebar-ring: oklch(0.704 0.04 256.788); */
 }
 
-.dark {
-  --radius: 0.625rem;
-  --background: #121212;
-  --foreground: #ffffff;
-  --card: #121212;
-  --card-foreground: #ffffff;
-  /* --popover: oklch(1 0 0); */
-  /* --popover-foreground: oklch(0.129 0.042 264.695); */
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  /* --secondary: oklch(0.968 0.007 247.896); */
-  --secondary-foreground: #000000;
-  --muted: #161616;
-  --muted-foreground: #121212;
-  --accent: #ffffff;
-  /* --accent-foreground: oklch(0.208 0.042 265.755); */
-  --destructive: #ff6467;
-  --border: #ffffff;
-  --input: #ffffff;
-  /* --ring: oklch(0.704 0.04 256.788); */
-  --chart-1: #7bf1a8;
-  --chart-2: #ff6467;
-  /* --chart-3: oklch(0.398 0.07 227.392); */
-  /* --chart-4: oklch(0.828 0.189 84.429); */
-  /* --chart-5: oklch(0.769 0.188 70.08); */
-  /* --sidebar: oklch(0.984 0.003 247.858); */
-  /* --sidebar-foreground: oklch(0.129 0.042 264.695); */
-  /* --sidebar-primary: oklch(0.208 0.042 265.755); */
-  /* --sidebar-primary-foreground: oklch(0.984 0.003 247.858); */
-  /* --sidebar-accent: oklch(0.968 0.007 247.896); */
-  /* --sidebar-accent-foreground: oklch(0.208 0.042 265.755); */
-  /* --sidebar-border: oklch(0.929 0.013 255.508); */
-  /* --sidebar-ring: oklch(0.704 0.04 256.788); */
-}
+/* .dark {} */
 
 @layer base {
   * {

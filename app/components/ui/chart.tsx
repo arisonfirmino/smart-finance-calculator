@@ -5,7 +5,7 @@ import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/app/lib/utils";
 import { formatCurrency } from "@/app/helpers/formatCurrency";
-import { TradeDownIcon, TradeUpIcon } from "hugeicons-react";
+import { CalendarDaysIcon } from "lucide-react";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -175,23 +175,15 @@ function ChartTooltipContent({
   return (
     <div
       className={cn(
-        "border-border/15 bg-card grid min-w-[8rem] items-start rounded-sm border text-xs shadow-xl",
+        "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
         className,
       )}
     >
-      {!nestLabel ? (
-        <div className="flex items-center justify-between p-2">
-          <span
-            className={`size-3 rounded ${payload.map((item) => (item.name === "income" ? "bg-green-500 dark:bg-green-300" : "bg-red-600 dark:bg-red-400"))}`}
-          />
-          {payload.map((item) => (
-            <p key={item.name} className="font-medium">
-              {item.name === "income" ? "Receitas" : "Despesas"}
-            </p>
-          ))}
-        </div>
-      ) : null}
-      <div>
+      <div className="flex items-center gap-1.5 text-xs font-medium">
+        <CalendarDaysIcon size={12} />
+        {!nestLabel ? <span>{payload[0].payload.date}</span> : null}
+      </div>
+      <div className="grid gap-1.5">
         {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
@@ -201,7 +193,7 @@ function ChartTooltipContent({
             <div
               key={item.dataKey}
               className={cn(
-                "[&>svg]:text-muted-foreground border-border/15 flex w-full flex-wrap items-stretch gap-2 border-t p-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
+                "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                 indicator === "dot" && "items-center",
               )}
             >
@@ -213,13 +205,24 @@ function ChartTooltipContent({
                     <itemConfig.icon />
                   ) : (
                     !hideIndicator && (
-                      <div className="[&_svg:not([class*='size-'])]:size-4">
-                        {item.name === "income" ? (
-                          <TradeUpIcon color={indicatorColor} />
-                        ) : (
-                          <TradeDownIcon color={indicatorColor} />
+                      <div
+                        className={cn(
+                          "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
+                          {
+                            "h-2.5 w-2.5": indicator === "dot",
+                            "w-1": indicator === "line",
+                            "w-0 border-[1.5px] border-dashed bg-transparent":
+                              indicator === "dashed",
+                            "my-0.5": nestLabel && indicator === "dashed",
+                          },
                         )}
-                      </div>
+                        style={
+                          {
+                            "--color-bg": indicatorColor,
+                            "--color-border": indicatorColor,
+                          } as React.CSSProperties
+                        }
+                      />
                     )
                   )}
                   <div
@@ -231,10 +234,9 @@ function ChartTooltipContent({
                     <div className="grid gap-1.5">
                       {nestLabel ? tooltipLabel : null}
                     </div>
-
-                    <span className="text-xs font-medium">
-                      {formatCurrency(Number(item.value))}
-                    </span>
+                    {item.value && (
+                      <span>{formatCurrency(Number(item.value))}</span>
+                    )}
                   </div>
                 </>
               )}

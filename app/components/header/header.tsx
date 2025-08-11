@@ -1,63 +1,51 @@
+"use client";
+
+import { useState } from "react";
+
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
 
-import UserAvatar from "@/app/components/user-avatar";
-import Greeting from "@/app/components/header/greeting";
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/app/components/ui/sheet";
-import { Separator } from "@/app/components/ui/separator";
-import FinancialChart from "@/app/components/chart/financial-chart";
-import LateralMenu from "@/app/components/menu/lateral-menu";
+import Search from "@/app/components/header/search";
+import UserGreeting from "@/app/components/header/user-greeting";
 
-import { Menu01Icon } from "hugeicons-react";
+import LateralMenu from "@/app/components/header/lateral-menu";
 
-import { Prisma } from "@prisma/client";
+import { MenuIcon } from "lucide-react";
 
-interface HeaderProps {
-  user: Prisma.UserGetPayload<{
-    include: {
-      banks: true;
-      transactions: true;
-    };
-  }>;
-  hasTransactions: boolean;
-}
+import { User } from "@/app/types";
 
-const Header = ({ user, hasTransactions }: HeaderProps) => {
+const Header = ({ user }: { user: User }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="border-border/50 flex items-center justify-between p-5 md:border-b xl:hidden">
-      <div className="flex items-center gap-2.5">
-        <UserAvatar user={user} />
-        <Greeting user={user} />
+    <header className="bg-background relative flex w-full xl:h-screen xl:max-w-xs xl:flex-col xl:border-r">
+      <div className="flex w-full items-center justify-between p-5 xl:hidden">
+        <UserGreeting user={user} />
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger
+            className={cn(buttonVariants({ size: "icon", variant: "ghost" }))}
+          >
+            <MenuIcon />
+          </SheetTrigger>
+
+          <SheetContent>
+            <SheetTitle className="hidden">Configurações</SheetTitle>
+            <LateralMenu user={user} setOpen={setOpen} />
+          </SheetContent>
+        </Sheet>
       </div>
 
-      <Sheet>
-        <SheetTrigger
-          className={cn(buttonVariants({ size: "icon", variant: "ghost" }))}
-        >
-          <Menu01Icon />
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Configurações</SheetTitle>
-          </SheetHeader>
+      <Search user={user} />
 
-          <Separator />
-
-          <div className="hidden md:block xl:hidden">
-            {hasTransactions && <FinancialChart user={user} />}
-          </div>
-
-          <Separator />
-
-          <LateralMenu user={user} />
-        </SheetContent>
-      </Sheet>
+      <div className="hidden flex-1 xl:flex">
+        <LateralMenu user={user} />
+      </div>
     </header>
   );
 };

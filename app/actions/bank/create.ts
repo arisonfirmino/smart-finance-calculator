@@ -3,77 +3,53 @@
 import { db } from "@/app/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-import { incrementUserBalance } from "@/app/actions/helpers";
-
-import { ActionResponse } from "@/app/types";
-
 interface CreateBankDTO {
-  userId: string;
+  userEmail: string;
   name: string;
   icon: string;
-  amount?: number;
+  starting_balance?: number;
 }
 
 export const createBank = async ({
-  userId,
+  userEmail,
   name,
   icon,
-  amount,
-}: CreateBankDTO): Promise<ActionResponse> => {
-  if (!userId) {
-    return {
-      success: false,
-      type: "unauthorized",
-      error: "Usuário não autenticado.",
-    };
-  }
+  starting_balance,
+}: CreateBankDTO) => {
+  if (!userEmail) return { error: "E-mail do usuário não informado." };
+  if (!name || !icon) return { error: "Nome e ícone são obrigatórios." };
 
   const user = await db.user.findUnique({
-    where: { id: userId },
+    where: { email: userEmail },
     include: { banks: true },
   });
+  if (!user) return { error: "Usuário não encontrado." };
 
-  if (!user) {
-    return {
-      success: false,
-      type: "not_found",
-      error: "Usuário não encontrado.",
-    };
-  }
+  if (user.banks.find((bank) => bank.name === name))
+    return { error: `${name} já está cadastrado.` };
 
-  if (!name || !icon) {
-    return {
-      success: false,
-      type: "validation_error",
-      error: "Nome e ícone são obrigatórios.",
-    };
-  }
-
-  if (
-    user.banks.find((bank) => bank.name.toLowerCase() === name.toLowerCase())
-  ) {
-    return {
-      success: false,
-      type: "conflict",
-      error: `${name} já está cadastrado na sua conta.`,
-    };
-  }
-
-  if (amount) {
-    await incrementUserBalance(userId, amount);
-  }
+  const balance = starting_balance ?? 0;
 
   await db.bank.create({
     data: {
-      userId,
+      userId: user.id,
       name,
       icon,
-      initial_value: amount,
-      current_value: amount,
+      starting_balance: balance.toString(),
+      current_balance: balance.toString(),
+      updated_at: new Date(),
     },
   });
 
-  revalidatePath("/");
+  if (balance > 0) {
+    await db.user.update({
+      where: { id: user.id },
+      data: {
+        balance: { increment: balance },
+        updated_at: new Date(),
+      },
+    });
+  }
 
-  return { success: true };
+  revalidatePath("/");
 };

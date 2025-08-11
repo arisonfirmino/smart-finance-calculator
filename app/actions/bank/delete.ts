@@ -3,68 +3,35 @@
 import { db } from "@/app/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-import { revertUserBalanceForBank } from "@/app/actions/helpers";
+export const deleteAllBanks = async ({ userEmail }: { userEmail: string }) => {
+  if (!userEmail)
+    throw new Error(
+      "Não foi possível identificar o seu usuário. Por favor, tente novamente.",
+    );
 
-import { ActionResponse } from "@/app/types";
+  const user = await db.user.findUnique({
+    where: { email: userEmail },
+    include: { banks: true },
+  });
+  if (!user)
+    throw new Error(
+      "Usuário não encontrado. Verifique se você está logado corretamente.",
+    );
 
-interface DeleteBankDTO {
-  userId: string;
-  bankId: string;
-}
+  if (user.banks.length === 0)
+    throw new Error("Nenhum banco encontrado para ser excluído.");
 
-export const deleteBank = async ({
-  userId,
-  bankId,
-}: DeleteBankDTO): Promise<ActionResponse> => {
-  if (!userId) {
-    return {
-      success: false,
-      type: "unauthorized",
-      error: "Usuário não autenticado.",
-    };
-  }
+  await db.bank.deleteMany({ where: { userId: user.id } });
 
-  if (!bankId) {
-    return {
-      success: false,
-      type: "validation_error",
-      error: "Banco não informado.",
-    };
-  }
-
-  const [user, bank] = await Promise.all([
-    db.user.findUnique({ where: { id: userId } }),
-    db.bank.findUnique({ where: { id: bankId }, include: { user: true } }),
-  ]);
-
-  if (!user) {
-    return {
-      success: false,
-      type: "not_found",
-      error: "Usuário não encontrado.",
-    };
-  }
-
-  if (!bank) {
-    return {
-      success: false,
-      type: "not_found",
-      error: "Banco não encontrado.",
-    };
-  }
-
-  if (bank.user.id !== userId) {
-    return {
-      success: false,
-      type: "unauthorized",
-      error: "Este banco não pertence ao usuário.",
-    };
-  }
-
-  await revertUserBalanceForBank(userId, bankId);
-  await db.bank.delete({ where: { id: bankId } });
+  await db.user.update({
+    where: { id: user.id },
+    data: {
+      balance: 0,
+      total_income: 0,
+      total_expenses: 0,
+      updated_at: new Date(),
+    },
+  });
 
   revalidatePath("/");
-
-  return { success: true };
 };

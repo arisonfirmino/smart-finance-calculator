@@ -1,19 +1,19 @@
 import { db } from "@/app/lib/prisma";
 
-export const getUser = async (id: string) => {
+export const getUser = async (email: string) => {
+  if (!email) return null;
+
   const user = await db.user.findUnique({
-    where: { id },
+    where: { email },
     include: {
       banks: {
-        orderBy: { created_at: "desc" },
+        include: { transactions: true },
+        orderBy: { updated_at: "desc" },
       },
-      transactions: {
-        include: {
-          bank: true,
-        },
-      },
+      transactions: { include: { bank: true } },
     },
   });
+  if (!user) return null;
 
   return JSON.parse(JSON.stringify(user));
 };

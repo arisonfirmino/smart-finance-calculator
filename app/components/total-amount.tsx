@@ -1,41 +1,42 @@
-import { MoneyReceive01Icon, MoneySend01Icon } from "hugeicons-react";
+import { CircleArrowDownIcon, CircleArrowUpIcon } from "lucide-react";
 
 import { formatCurrency } from "@/app/helpers/formatCurrency";
 
-import { User } from "@prisma/client";
+import { User } from "@/app/types";
 
-interface TotalAmountProps {
+const TotalAmount = ({
+  user,
+}: {
   user: Pick<User, "total_income" | "total_expenses">;
-}
-
-const TotalAmount = ({ user }: TotalAmountProps) => {
+}) => {
   const totals = [
-    { type: "income", amount: Number(user.total_income) },
-    { type: "expense", amount: Number(user.total_expenses) },
+    { type: "income", amount: user.total_income },
+    { type: "expense", amount: user.total_expenses },
   ];
 
   return (
-    <div className="flex w-full gap-5 md:w-fit md:gap-10">
+    <div className="flex items-center gap-5 p-5 pb-0 md:gap-10 md:p-0">
       {totals.map((total) => (
         <div
           key={total.type}
-          className="border-border/30 flex w-full items-center gap-2.5 rounded-2xl border p-2.5 shadow md:rounded-none md:border-none md:p-0 md:shadow-none"
+          className="flex w-full items-center gap-2.5 rounded-2xl border p-2.5 md:w-fit md:rounded-none md:border-none md:p-0"
         >
-          <span
-            className={`flex size-10 items-center justify-center rounded-2xl ${total.type === "income" ? "bg-green-500/15 text-green-500 dark:bg-green-300/15 dark:text-green-300" : "bg-red-600/15 text-red-600 dark:bg-red-400/15 dark:text-red-400"}`}
+          <div
+            className={`flex size-10 items-center justify-center rounded-2xl ${total.type === "income" ? "bg-income/20 text-income" : "bg-expense/20 text-expense"}`}
           >
             {total.type === "income" ? (
-              <MoneyReceive01Icon size={16} />
+              <CircleArrowDownIcon size={16} />
             ) : (
-              <MoneySend01Icon size={16} />
+              <CircleArrowUpIcon size={16} />
             )}
-          </span>
+          </div>
+
           <div>
             <p className="text-foreground/50 text-xs">
               {total.type === "income" ? "Receitas" : "Despesas"}
             </p>
             <p className="text-sm font-medium">
-              {formatCurrency(total.amount)}
+              {formatCurrency(Number(total.amount))}
             </p>
           </div>
         </div>

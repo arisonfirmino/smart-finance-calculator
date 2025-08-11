@@ -4,7 +4,6 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { cn } from "@/app/lib/utils";
-import { buttonVariants } from "./button";
 
 function Dialog({
   ...props
@@ -13,9 +12,16 @@ function Dialog({
 }
 
 function DialogTrigger({
+  className,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
+  return (
+    <DialogPrimitive.Trigger
+      data-slot="dialog-trigger"
+      className={cn("cursor-pointer", className)}
+      {...props}
+    />
+  );
 }
 
 function DialogPortal({
@@ -49,15 +55,18 @@ function DialogOverlay({
 function DialogContent({
   className,
   children,
+
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) {
+}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+  showCloseButton?: boolean;
+}) {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "bg-background dark:border-border/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 border-border/50 fixed top-[50%] left-[50%] z-50 grid w-full max-w-md translate-x-[-50%] translate-y-[-50%] rounded-2xl border shadow-lg duration-200",
+          "data-[state=open]:animate-in bg-background data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top fixed top-1/2 left-1/2 z-50 mt-6 flex w-full max-w-4/5 -translate-x-1/2 -translate-y-1/2 flex-col transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 md:m-0 md:max-w-md xl:max-w-sm",
           className,
         )}
         {...props}
@@ -72,7 +81,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1 p-5 text-center", className)}
+      className={cn("space-y-0.5 text-center", className)}
       {...props}
     />
   );
@@ -80,19 +89,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
 
 function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="dialog-footer"
-      className={cn("px-5 pt-2.5 pb-5", className)}
-      {...props}
-    >
-      <DialogClose
-        className={cn(
-          buttonVariants({ variant: "outline", className: "w-full" }),
-        )}
-      >
-        Cancelar
-      </DialogClose>
-    </div>
+    <div data-slot="dialog-footer" className={cn("", className)} {...props} />
   );
 }
 
@@ -103,10 +100,7 @@ function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn(
-        "text-foreground text-base font-semibold uppercase",
-        className,
-      )}
+      className={cn("text-base font-semibold", className)}
       {...props}
     />
   );

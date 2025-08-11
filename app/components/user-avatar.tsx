@@ -1,19 +1,15 @@
 import {
   Avatar,
-  AvatarFallback,
   AvatarImage,
+  AvatarFallback,
 } from "@/app/components/ui/avatar";
 
 import { User } from "@prisma/client";
 
-interface UserAvatarProps {
-  user: Pick<User, "name" | "image">;
-}
-
-const UserAvatar = ({ user }: UserAvatarProps) => {
+const UserAvatar = ({ user }: { user: Pick<User, "name" | "avatar"> }) => {
   return (
     <Avatar>
-      <AvatarImage src={user.image ?? ""} />
+      <AvatarImage src={user.avatar ?? ""} />
       <AvatarFallback>{user.name}</AvatarFallback>
     </Avatar>
   );

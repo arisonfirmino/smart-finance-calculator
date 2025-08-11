@@ -3,10 +3,9 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import AuthProvider from "@/app/providers/auth";
-import ThemeProvider from "@/app/providers/theme";
 import { Toaster } from "@/app/components/ui/sonner";
 
-const poppinsFont = Poppins({
+const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -22,14 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" suppressHydrationWarning>
-      <body className={`${poppinsFont.className} antialiased`}>
-        <AuthProvider>
-          <ThemeProvider>
-            {children}
-            <Toaster position="top-center" />
-          </ThemeProvider>
-        </AuthProvider>
+    <html lang="pt-br">
+      <body
+        className={`${poppins.className} flex min-h-screen w-full flex-col antialiased xl:flex-row`}
+      >
+        <AuthProvider>{children}</AuthProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );
